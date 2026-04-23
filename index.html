@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mart Liivand — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #fdf8ef;
+      --surface: #ffffff;
+      --border:  #ecddc5;
+      --accent:  #c2410c;
+      --accent2: #d97706;
+      --dim:     #9a8366;
+      --text:    #4a3a28;
+      --head:    #2c1f14;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    /* ── HERO ── */
+    .hero { margin-bottom: 72px; }
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--head);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .hero p {
+      max-width: 520px;
+      margin-bottom: 28px;
+      color: var(--text);
+    }
+    .links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      padding: 8px 18px;
+      border-radius: 4px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .links a:hover { border-color: var(--accent); color: var(--accent); }
+    .links a.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .links a.primary:hover { background: #2d6de0; }
+
+    /* ── DIVIDER ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+
+    /* ── SECTION LABEL ── */
+    .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--head);
+      margin-bottom: 24px;
+    }
+
+    /* ── FEATURED CARDS ── */
+    .featured { display: grid; gap: 16px; margin-bottom: 0; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 24px 28px;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: #d4b896; }
+    .card.accent-left { border-left: 3px solid var(--accent); }
+
+    .card-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--head);
+    }
+    .card-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      padding: 2px 7px;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .b-web   { background: #fef3e8; color: #c2410c; border: 1px solid #f5d5b0; }
+    .b-infra { background: #f5f0e1; color: #7c6821; border: 1px solid #e4d5a8; }
+    .b-iot   { background: #fff7e0; color: #a16207; border: 1px solid #f3df9b; }
+    .b-ai    { background: #fbeee8; color: #b13a1f; border: 1px solid #f0cdb8; }
+
+    .card p { font-size: 0.88rem; color: var(--text); margin-bottom: 14px; }
+
+    .stack { display: flex; flex-wrap: wrap; gap: 6px; }
+    .stack span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--dim);
+      background: #f8f0e0;
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      border-radius: 2px;
+    }
+
+    /* ── OTHER WORK ── */
+    .other { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .mini {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 18px 20px;
+      transition: border-color 0.2s;
+    }
+    .mini:hover { border-color: #d4b896; }
+    .mini-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--head);
+      margin-bottom: 5px;
+    }
+    .mini p { font-size: 0.8rem; color: var(--dim); line-height: 1.5; }
+
+    /* ── FOOTNOTE ── */
+    .footnote {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--dim);
+      line-height: 1.7;
+    }
+    .footnote a { color: var(--dim); text-decoration: underline; text-underline-offset: 3px; }
+    .footnote a:hover { color: var(--accent); }
+
+    @media (max-width: 520px) {
+      .other { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="mono">Tallinn, Estonia</p>
+  <h1>Hi, I'm Mart</h1>
+  <p>I build and run things — self-hosted infrastructure, IoT sensor networks, web applications, and AI automation pipelines. Hands-on across the stack, from bare metal to browser. I use AI as a force multiplier: designing systems, orchestrating components, and turning its capabilities into working, deployable tools.</p>
+  <div class="links">
+    <a href="https://www.linkedin.com/in/mart-liivand-6526851b/" class="primary" target="_blank">LinkedIn</a>
+  </div>
+</div>
+
+<hr>
+
+<!-- FEATURED -->
+<div class="label">personal</div>
+<h2>Hobby projects</h2>
+<div class="featured">
+
+  <div class="card accent-left">
+    <div class="card-top">
+      <div class="card-title">Countersteer</div>
+      <span class="card-badge b-web">Web App</span>
+    </div>
+    <p>Motorcycle news aggregator available at <a href="https://www.countersteer.cc" target="_blank" style="color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent);">www.countersteer.cc</a>. Scrapes multiple relevant news sources into a single feed. Self-hosted on Hetzner with Docker and Caddy.</p>
+    <div class="stack">
+      <span>Python</span><span>Docker</span><span>Caddy</span><span>Hetzner</span>
+    </div>
+  </div>
+
+  <div class="card accent-left">
+    <div class="card-top">
+      <div class="card-title">Proxmox Homelab</div>
+      <span class="card-badge b-infra">Infrastructure</span>
+    </div>
+    <p>Started on a Raspberry Pi over the winter — weather monitoring, MQTT broker for sensors, Grafana dashboards, and a Minecraft server all running on a single board. Outgrew it and migrated the whole stack to a separate computer running Proxmox VE, now hosting multiple LXC containers and VMs. Hardened with Tailscale overlay, UFW, fail2ban, and automated weekly backups. Host metrics flow into InfluxDB with a custom Grafana dashboard.</p>
+    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">Hosts a growing set of custom applications — including <em>Uudised</em>, a self-hosted Flask news aggregator that uses the Gemini API to summarise articles into a daily digest.</p>
+    <div class="stack">
+      <span>Raspberry Pi</span><span>Proxmox VE</span><span>LXC</span><span>Docker</span><span>Tailscale</span><span>InfluxDB</span><span>Grafana</span><span>Flask</span><span>Gemini API</span>
+    </div>
+  </div>
+
+  <div class="card accent-left">
+    <div class="card-top">
+      <div class="card-title">Sensor Networks — Home to Lab</div>
+      <span class="card-badge b-iot">IoT / Infrastructure</span>
+    </div>
+    <p>What started as a simple homelab experimentation with sensors and displaying their data scaled up to become the monitoring backbone for a battery recycling R&amp;D lab (Jälle)</p>
+    <p>Industrial temperature controllers integrated over Modbus TCP via Node-RED, ESP32/MQTT nodes integration for additional temperature points, and a unified Grafana dashboard on top.</p>
+    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">Also built out the underlying infrastructure needed to run the monitoring backbone reliably in the lab environment.</p>
+    <div class="stack">
+      <span>ESP32</span><span>DHT22</span><span>ESPHome</span><span>MQTT</span><span>Mosquitto</span><span>Modbus TCP</span><span>Node-RED</span><span>Lumel RE92</span><span>InfluxDB</span><span>Grafana</span>
+    </div>
+  </div>
+
+</div>
+
+<hr>
+
+<!-- WORK PROJECTS -->
+<div class="label">professional</div>
+<h2>Work Projects</h2>
+<div class="featured">
+
+  <div class="card">
+    <div class="card-top">
+      <div class="card-title">Serverless AI Pipeline Suite</div>
+      <span class="card-badge b-ai">AI / AWS</span>
+    </div>
+    <p>Three production AI automations on AWS Lambda, orchestrated around Claude Sonnet via Amazon Bedrock. All run end-to-end without human intervention and return structured outputs consumed directly by downstream systems.</p>
+    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">Includes: a daily Google Ads anomaly reporter publishing to Notion; a post-call sales scoring system writing to CRM within seconds of a call ending; and a RAG support bot with multi-turn memory grounded in internal documentation.</p>
+    <div class="stack">
+      <span>AWS Lambda</span><span>Amazon Bedrock</span><span>Claude Sonnet</span><span>S3</span><span>Python</span><span>RAG</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="card-title">Automated QA for Customer Support</div>
+      <span class="card-badge b-ai">AI / Automation</span>
+    </div>
+    <p>Replaces sampled manual QA with full weekly coverage. Pulls support conversations from the CRM, evaluates each against a QA playbook via LLM, and produces structured per-agent reports with scores and rationale.</p>
+    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">Shifted coverage from dozens of spot-checks per quarter to full auditable coverage every week.</p>
+    <div class="stack">
+      <span>Python</span><span>Vertex AI</span><span>Gemini</span><span>HubSpot API</span><span>GCP</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTNOTE -->
+<div class="footnote">
+  Also I run <a href="https://kratikaitse.ee" target="_blank">Kratikaitse</a> — cybersecurity &amp; AI governance consulting for Estonian SMBs (ISO 27001, ISO 42001, E-ITS, CISO as a service).
+</div>
+
+</body>
+</html>
