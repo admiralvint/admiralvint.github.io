@@ -223,14 +223,14 @@
 
   <div class="card accent-left">
     <div class="card-top">
-      <div class="card-title">Sensor Networks — Home to Lab</div>
+      <div class="card-title">Jälle Lab — Monitoring Platform</div>
       <span class="card-badge b-iot">IoT / Infrastructure</span>
     </div>
-    <p>What started as a simple homelab experimentation with sensors and displaying their data scaled up to become the monitoring backbone for a battery recycling R&amp;D lab (Jälle)</p>
-    <p>Industrial temperature controllers integrated over Modbus TCP via Node-RED, ESP32/MQTT nodes integration for additional temperature points, and a unified Grafana dashboard on top.</p>
-    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">Also built out the underlying infrastructure needed to run the monitoring backbone reliably in the lab environment.</p>
+    <p>Built the full monitoring stack for a battery recycling R&amp;D facility — from ESP32 sensor nodes and industrial Modbus TCP controllers to a custom React app that lets lab operators configure experiments, set thresholds, and review data without touching Grafana.</p>
+    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:10px;">Replaced manual, error-prone data logging. Readings flow through MQTT and Node-RED into InfluxDB, surfaced through both Grafana for ops visibility and a purpose-built operator dashboard for lab staff.</p>
+    <a href="jalle-lab.html" style="display:inline-block; margin-bottom:16px; font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--accent); text-decoration:none; letter-spacing:0.05em;">Case study →</a>
     <div class="stack">
-      <span>ESP32</span><span>DHT22</span><span>ESPHome</span><span>MQTT</span><span>Mosquitto</span><span>Modbus TCP</span><span>Node-RED</span><span>Lumel RE92</span><span>InfluxDB</span><span>Grafana</span>
+      <span>React</span><span>TypeScript</span><span>ESP32</span><span>Arduino</span><span>MAX31856</span><span>K-type thermocouple</span><span>MQTT</span><span>Mosquitto</span><span>Modbus TCP</span><span>Node-RED</span><span>Lumel RE92</span><span>InfluxDB</span><span>Grafana</span><span>Docker</span>
     </div>
   </div>
 
