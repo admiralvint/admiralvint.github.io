@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Utility AI Power Play — Sector Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root {
+    --bg: #0a0c10;
+    --bg2: #11141a;
+    --bg3: #181c24;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e8eaf0;
+    --text2: #8a8fa8;
+    --text3: #4a5068;
+    --green: #00e676;
+    --green-dim: rgba(0,230,118,0.12);
+    --amber: #ffc107;
+    --amber-dim: rgba(255,193,7,0.12);
+    --red: #ff5252;
+    --red-dim: rgba(255,82,82,0.12);
+    --blue: #448aff;
+    --blue-dim: rgba(68,138,255,0.12);
+    --purple: #b388ff;
+    --teal: #64ffda;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    border-bottom: 1px solid var(--border2);
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: rgba(10,12,16,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .site-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.02em; }
+  .site-title span { color: var(--teal); }
+  .header-meta { color: var(--text3); font-size: 11px; }
+
+  /* LAYOUT */
+  .container { max-width: 1400px; margin: 0 auto; padding: 40px; }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  /* STAT CARDS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .stat-label { font-size: 10px; color: var(--text3); margin-bottom: 6px; letter-spacing: 0.05em; }
+  .stat-value { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; }
+  .stat-sub { font-size: 10px; color: var(--text3); margin-top: 4px; }
+
+  /* FILTER BAR */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label { color: var(--text3); font-size: 11px; margin-right: 4px; }
+  .filter-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover, .filter-btn.active { background: var(--bg3); border-color: var(--border2); color: var(--text); }
+  .filter-btn.active { border-color: var(--teal); color: var(--teal); }
+
+  /* SORT ROW */
+  .sort-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  .sort-select {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+  }
+
+  /* STOCK GRID */
+  .stock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  /* STOCK CARD */
+  .stock-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+    cursor: pointer;
+  }
+  .stock-card:hover { border-color: var(--border2); }
+  .stock-card[data-hidden="true"] { display: none; }
+
+  .card-top {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .card-ticker {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .card-name { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .card-price {
+    text-align: right;
+  }
+  .card-price-num { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 600; }
+  .card-mktcap { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+  .conviction-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 3px;
+    margin-top: 6px;
+  }
+  .conv-1 { background: var(--green-dim); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
+  .conv-2 { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(68,138,255,0.25); }
+  .conv-3 { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(255,193,7,0.25); }
+  .conv-4 { background: var(--red-dim); color: var(--red); border: 1px solid rgba(255,82,82,0.25); }
+  .conv-5 { background: rgba(179,136,255,0.12); color: var(--purple); border: 1px solid rgba(179,136,255,0.25); }
+
+  .card-metrics {
+    padding: 14px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .metric-item { }
+  .metric-item-label { font-size: 9px; color: var(--text3); letter-spacing: 0.06em; margin-bottom: 2px; }
+  .metric-item-value { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; }
+  .metric-item-value.good { color: var(--green); }
+  .metric-item-value.warn { color: var(--amber); }
+  .metric-item-value.bad { color: var(--red); }
+
+  .card-analysis {
+    padding: 14px 20px;
+  }
+  .analysis-tab-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .atab {
+    font-size: 10px;
+    padding: 4px 10px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+    color: var(--text3);
+    transition: all 0.1s;
+  }
+  .atab.active { border-color: var(--teal); color: var(--teal); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .analysis-text { font-size: 11px; color: var(--text2); line-height: 1.7; }
+  .analysis-text strong { color: var(--text); font-weight: 500; }
+
+  .bull-bear-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .bull-box { background: var(--green-dim); border: 1px solid rgba(0,230,118,0.2); border-radius: 6px; padding: 10px; }
+  .bear-box { background: var(--red-dim); border: 1px solid rgba(255,82,82,0.2); border-radius: 6px; padding: 10px; }
+  .bb-label { font-size: 9px; letter-spacing: 0.1em; margin-bottom: 6px; font-weight: 500; }
+  .bull-box .bb-label { color: var(--green); }
+  .bear-box .bb-label { color: var(--red); }
+  .bb-point { font-size: 10px; color: var(--text2); margin-bottom: 4px; line-height: 1.5; }
+  .bb-point::before { content: '→ '; color: var(--text3); }
+
+  .target-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .target-pill {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+  }
+  .target-pill.bear { border-color: rgba(255,82,82,0.3); color: var(--red); }
+  .target-pill.base { border-color: var(--border2); color: var(--text2); }
+  .target-pill.bull { border-color: rgba(0,230,118,0.3); color: var(--green); }
+
+  /* CHART SECTION */
+  .charts-section { margin-bottom: 56px; }
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .chart-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .chart-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; margin-bottom: 16px; }
+  .chart-wrap { position: relative; width: 100%; height: 260px; }
+
+  /* COMPARISON TABLE */
+  .table-section { margin-bottom: 56px; }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  .comparison-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    border-bottom: 1px solid var(--border2);
+    cursor: pointer;
+    user-select: none;
+  }
+  .comparison-table th:hover { color: var(--text2); }
+  .comparison-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+  }
+  .comparison-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .comparison-table td:first-child { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--text); }
+  .td-good { color: var(--green) !important; }
+  .td-warn { color: var(--amber) !important; }
+  .td-bad { color: var(--red) !important; }
+
+  /* VERDICT MATRIX */
+  .verdict-section { margin-bottom: 56px; }
+  .verdict-grid-outer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .verdict-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .verdict-item-ticker { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .verdict-item-call { font-size: 11px; margin-bottom: 8px; }
+  .verdict-item-text { font-size: 11px; color: var(--text3); line-height: 1.6; }
+
+  /* RISK MATRIX */
+  .risk-section { margin-bottom: 56px; }
+  .risk-scatter { position: relative; width: 100%; height: 400px; }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text3);
+    font-size: 10px;
+  }
+  .footer-warn { color: var(--amber); }
+
+  /* RISK BARS */
+  .risk-bar-wrap { margin: 4px 0; display: flex; align-items: center; gap: 8px; }
+  .risk-bar-label { width: 80px; font-size: 9px; color: var(--text3); flex-shrink: 0; }
+  .risk-bar-track { flex: 1; height: 4px; background: var(--bg3); border-radius: 2px; }
+  .risk-bar-fill { height: 4px; border-radius: 2px; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  @media (max-width: 900px) {
+    .container { padding: 20px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .stock-grid { grid-template-columns: 1fr; }
+    .charts-grid { grid-template-columns: 1fr; }
+    .verdict-grid-outer { grid-template-columns: 1fr; }
+    .site-header { padding: 16px 20px; }
+    .footer { padding: 16px 20px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div>
+    <div class="site-title">US UTILITY <span>AI POWER PLAY</span></div>
+    <div class="header-meta">10-stock sector analysis · May 2026 · Not investment advice</div>
+  </div>
+  <div class="header-meta" style="text-align:right;">
+    Data sourced from SEC filings, Q1 2026 earnings releases<br>
+    Compiled from multi-session equity research
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- SECTOR STATS -->
+  <div class="section-label">sector overview</div>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">STOCKS ANALYSED</div>
+      <div class="stat-value">10</div>
+      <div class="stat-sub">NEE, DUK, SO, EXC, AEP, SRE, PEG, XEL, EIX, PCG</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">SECTOR FORWARD P/E RANGE</div>
+      <div class="stat-value">10x — 24x</div>
+      <div class="stat-sub">PCG cheapest · NEE most expensive</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">COMBINED 5-YR CAPEX PLANS</div>
+      <div class="stat-value" style="color:var(--amber);">~$500B+</div>
+      <div class="stat-sub">AEP $78B · DUK $103B · SRE $65B · NEE $90-100B FPL only</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">AI CONTRACTED LOAD (AEP ALONE)</div>
+      <div class="stat-value" style="color:var(--teal);">63 GW</div>
+      <div class="stat-sub">90% data center customers · 41GW in Texas</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">NAMES WITH NEGATIVE FCF</div>
+      <div class="stat-value" style="color:var(--red);">7 of 10</div>
+      <div class="stat-sub">Only PEG, DUK partially positive · all paying dividends from debt</div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <span class="filter-label">FILTER:</span>
+    <button class="filter-btn active" onclick="filterCards('all', this)">All 10</button>
+    <button class="filter-btn" onclick="filterCards('nobrainer', this)">No-brainer</button>
+    <button class="filter-btn" onclick="filterCards('cautious', this)">Cautious buy</button>
+    <button class="filter-btn" onclick="filterCards('speculative', this)">Speculative</button>
+    <button class="filter-btn" onclick="filterCards('avoid', this)">Avoid / Wait</button>
+    <button class="filter-btn" onclick="filterCards('wildfire', this)">Wildfire risk</button>
+    <span class="filter-label" style="margin-left:16px;">SORT:</span>
+    <select class="sort-select" onchange="sortCards(this.value)">
+      <option value="">Default</option>
+      <option value="pe">Forward P/E (low→high)</option>
+      <option value="target">Analyst upside</option>
+      <option value="yield">Dividend yield</option>
+      <option value="growth">EPS CAGR</option>
+    </select>
+  </div>
+
+  <!-- STOCK CARDS GRID -->
+  <div class="stock-grid" id="stockGrid">
+
+    <!-- PEG -->
+    <div class="stock-card" data-tags="nobrainer" data-pe="18" data-upside="15" data-yield="3.4" data-growth="7">
+      <div class="card-top">
+        <div>
+          <div class="card-ticker" style="color:var(--teal);">PEG</div>
+          <div class="card-name">Public Service Enterprise Group</div>
+          <div><span class="conviction-badge conv-1">No-brainer pick</span></div>
+        </div>
+        <div class="card-price">
+          <div class="card-price-num">~$78</div>
+          <div class="card-mktcap">Mkt cap ~$40B</div>
+        </div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric-item"><div class="metric-item-label">FWD P/E</div><div class="metric-item-value good">18x</div></div>
+        <div class="metric-item"><div class="metric-item-label">EPS CAGR</div><div class="metric-item-value">6–8%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIV YIELD</div><div class="metric-item-value">3.4%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DEBT/EQUITY</div><div class="metric-item-value good">1.38x</div></div>
+        <div class="metric-item"><div class="metric-item-label">FCF</div><div class="metric-item-value good">Positive Q1</div></div>
+        <div class="metric-item"><div class="metric-item-label">ANALYST TARGET</div><div class="metric-item-value">$90 median</div></div>
+        <div class="metric-item"><div class="metric-item-label">DILUTION</div><div class="metric-item-value good">+0.15% YoY</div></div>
+        <div class="metric-item"><div class="metric-item-label">2026 EPS</div><div class="metric-item-value">$4.28–$4.40</div></div>
+        <div class="metric-item"><div class="metric-item-label">UPSIDE TO TGT</div><div class="metric-item-value good">+15%</div></div>
+      </div>
+      <div class="card-analysis">
+        <div class="analysis-tab-row">
+          <div class="atab active" onclick="switchTab(this,'thesis-peg')">Thesis</div>
+          <div class="atab" onclick="switchTab(this,'bullbear-peg')">Bull / Bear</div>
+          <div class="atab" onclick="switchTab(this,'risk-peg')">Risk</div>
+        </div>
+        <div id="thesis-peg" class="tab-content active">
+          <div class="analysis-text">
+            <strong>Nuclear moat meets AI baseload demand.</strong> PSEG owns Salem, Hope Creek, and Peach Bottom nuclear plants — firm, carbon-free, 24/7 baseload directly in the Mid-Atlantic data center corridor. NRC license extensions secured to 2056–2066. NJ lifted nuclear moratorium April 2026. CEO actively in discussions with hyperscalers for premium nuclear PPAs.<br><br>
+            <strong>21-year track record</strong> of meeting or exceeding non-GAAP guidance. No new equity issuance planned. Q1 2026: op. cash $1.27B covered capex + dividends comfortably. 15 consecutive dividend increases at 6% growth.
+          </div>
+        </div>
+        <div id="bullbear-peg" class="tab-content">
+          <div class="bull-bear-row">
+            <div class="bull-box">
+              <div class="bb-label">BULL</div>
+              <div class="bb-point">Nuclear PPA signed with hyperscaler at premium pricing</div>
+              <div class="bb-point">NJ new nuclear construction enables capacity expansion</div>
+              <div class="bb-point">PJM capacity prices surge — nuclear windfall</div>
+            </div>
+            <div class="bear-box">
+              <div class="bb-label">BEAR</div>
+              <div class="bb-point">Single-state NJ regulator concentration risk</div>
+              <div class="bb-point">Aging Salem/Hope Creek — unplanned outage risk</div>
+              <div class="bb-point">NJ residential bill hikes trigger regulatory backlash</div>
+            </div>
+          </div>
+          <div class="target-row">
+            <span class="target-pill bear">Bear $73</span>
+            <span class="target-pill base">Base $90</span>
+            <span class="target-pill bull">Bull $101+</span>
+          </div>
+        </div>
+        <div id="risk-peg" class="tab-content">
+          <div class="analysis-text"><strong>Key risks:</strong> NJ BPU adverse rate ruling (-10–15% overnight), nuclear plant outage &gt;30 days, PJM capacity market reform capping merchant revenues. <strong>Wildfire exposure:</strong> None. <strong>Classification:</strong> Great business, good stock. Buy at current, add on dips below $73.</div>
+          <div style="margin-top:10px;">
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Regulatory</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:45%;background:var(--amber);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Wildfire</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:5%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Balance Sheet</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:25%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Execution</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:20%;background:var(--green);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AEP -->
+    <div class="stock-card" data-tags="cautious" data-pe="21" data-upside="8" data-yield="2.8" data-growth="9">
+      <div class="card-top">
+        <div>
+          <div class="card-ticker" style="color:#64ffda;">AEP</div>
+          <div class="card-name">American Electric Power</div>
+          <div><span class="conviction-badge conv-2">Cautious buy</span></div>
+        </div>
+        <div class="card-price">
+          <div class="card-price-num">~$130</div>
+          <div class="card-mktcap">Mkt cap ~$70B</div>
+        </div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric-item"><div class="metric-item-label">FWD P/E</div><div class="metric-item-value warn">21x</div></div>
+        <div class="metric-item"><div class="metric-item-label">EPS CAGR</div><div class="metric-item-value good">&gt;9%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIV YIELD</div><div class="metric-item-value">2.8%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DEBT/EQUITY</div><div class="metric-item-value warn">1.54x</div></div>
+        <div class="metric-item"><div class="metric-item-label">FCF</div><div class="metric-item-value bad">Negative</div></div>
+        <div class="metric-item"><div class="metric-item-label">AI PIPELINE</div><div class="metric-item-value good">63 GW</div></div>
+        <div class="metric-item"><div class="metric-item-label">DILUTION</div><div class="metric-item-value warn">ATM ongoing</div></div>
+        <div class="metric-item"><div class="metric-item-label">2026 EPS</div><div class="metric-item-value">$6.15–$6.45</div></div>
+        <div class="metric-item"><div class="metric-item-label">CAPEX PLAN</div><div class="metric-item-value good">$78B</div></div>
+      </div>
+      <div class="card-analysis">
+        <div class="analysis-tab-row">
+          <div class="atab active" onclick="switchTab(this,'thesis-aep')">Thesis</div>
+          <div class="atab" onclick="switchTab(this,'bullbear-aep')">Bull / Bear</div>
+          <div class="atab" onclick="switchTab(this,'risk-aep')">Risk</div>
+        </div>
+        <div id="thesis-aep" class="tab-content active">
+          <div class="analysis-text">
+            <strong>Largest US transmission grid. 63GW contracted AI load.</strong> 90% of pipeline is data center customers. 41GW in Texas alone. AEP owns 40,000+ miles of transmission — it cannot be replicated and cannot be routed around. Every hyperscaler connecting in Texas or Ohio goes through AEP wire.<br><br>
+            Q1 2026 EPS beat for 4th consecutive quarter. Capital plan raised from $72B to $78B on the strength of the pipeline alone. Take-or-pay tariffs secured in OH, IN, KY, WV.
+          </div>
+        </div>
+        <div id="bullbear-aep" class="tab-content">
+          <div class="bull-bear-row">
+            <div class="bull-box">
+              <div class="bb-label">BULL</div>
+              <div class="bb-point">TX SB6 smooth rollout unlocks 41GW interconnection timing</div>
+              <div class="bb-point">Take-or-pay contracts protect revenue from cancellations</div>
+              <div class="bb-point">Transmission investment at 9%+ CAGR through 2030</div>
+            </div>
+            <div class="bear-box">
+              <div class="bb-label">BEAR</div>
+              <div class="bb-point">Already re-rated +22% in 52 weeks — thesis priced in</div>
+              <div class="bb-point">Letters of agreement ≠ binding — cancellation risk exists</div>
+              <div class="bb-point">11-state regulatory footprint = multiple rate case risks</div>
+            </div>
+          </div>
+          <div class="target-row">
+            <span class="target-pill bear">Bear $114</span>
+            <span class="target-pill base">Base $135–$148</span>
+            <span class="target-pill bull">Bull $154</span>
+          </div>
+        </div>
+        <div id="risk-aep" class="tab-content">
+          <div class="analysis-text"><strong>Primary risk:</strong> AI capex pull-back by hyperscalers would expose the pipeline as less firm than presented. At 21x forward PE, any disappointment reprices sharply. <strong>Do not chase at current levels</strong> — consensus target is barely above current price on some measures. Wait for a 10–15% pullback.</div>
+          <div style="margin-top:10px;">
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Regulatory</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:60%;background:var(--amber);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Wildfire</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:10%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Balance Sheet</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:55%;background:var(--amber);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Pipeline Cancel</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:40%;background:var(--amber);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EIX -->
+    <div class="stock-card" data-tags="speculative wildfire" data-pe="11" data-upside="20" data-yield="5.1" data-growth="6">
+      <div class="card-top">
+        <div>
+          <div class="card-ticker" style="color:var(--amber);">EIX</div>
+          <div class="card-name">Edison International</div>
+          <div><span class="conviction-badge conv-3">Speculative — small size only</span></div>
+        </div>
+        <div class="card-price">
+          <div class="card-price-num">~$70</div>
+          <div class="card-mktcap">Mkt cap ~$27B</div>
+        </div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric-item"><div class="metric-item-label">FWD P/E</div><div class="metric-item-value good">11x</div></div>
+        <div class="metric-item"><div class="metric-item-label">EPS CAGR</div><div class="metric-item-value">5–7%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIV YIELD</div><div class="metric-item-value good">5.1%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DEBT/EQUITY</div><div class="metric-item-value bad">2.16x</div></div>
+        <div class="metric-item"><div class="metric-item-label">FCF</div><div class="metric-item-value bad">-$649M TTM</div></div>
+        <div class="metric-item"><div class="metric-item-label">EATON FIRE</div><div class="metric-item-value bad">Unresolved</div></div>
+        <div class="metric-item"><div class="metric-item-label">DATA CTR PIPE</div><div class="metric-item-value warn">10 GW total</div></div>
+        <div class="metric-item"><div class="metric-item-label">2026 EPS</div><div class="metric-item-value">$5.90–$6.20</div></div>
+        <div class="metric-item"><div class="metric-item-label">ANALYST TGT</div><div class="metric-item-value">$68–$88</div></div>
+      </div>
+      <div class="card-analysis">
+        <div class="analysis-tab-row">
+          <div class="atab active" onclick="switchTab(this,'thesis-eix')">Thesis</div>
+          <div class="atab" onclick="switchTab(this,'bullbear-eix')">Bull / Bear</div>
+          <div class="atab" onclick="switchTab(this,'risk-eix')">Risk</div>
+        </div>
+        <div id="thesis-eix" class="tab-content active">
+          <div class="analysis-text">
+            <strong>SoCal monopoly grid. AI's densest geography. Cheapest #2 in sector.</strong> SCE serves 50,000 sq-mi of Southern California including the world's most AI-compute-dense region. 10GW data center pipeline. GRC resolved — earnings visibility through 2028. 93% wildfire hardening complete. No new equity planned through 2030.<br><br>
+            At 11x forward vs sector average 18–21x, a re-rate to peer multiples = 60–90% upside on multiple expansion alone. That gap only closes if Eaton Fire liability is quantified and resolved.
+          </div>
+        </div>
+        <div id="bullbear-eix" class="tab-content">
+          <div class="bull-bear-row">
+            <div class="bull-box">
+              <div class="bb-label">BULL</div>
+              <div class="bb-point">Eaton Fire settled below $3B — re-rates to 17x immediately</div>
+              <div class="bb-point">CA wildfire legislation expands AB1054 fund materially</div>
+              <div class="bb-point">$9.8B rate case resolved favorably in Q3 2026</div>
+            </div>
+            <div class="bear-box">
+              <div class="bb-label">BEAR</div>
+              <div class="bb-point">Major 2026 fire season — new liability on unresolved Eaton</div>
+              <div class="bb-point">3,100+ claims, no ceiling — liability could exceed self-insurance</div>
+              <div class="bb-point">Dividend cut if wildfire costs + debt exceed cash capacity</div>
+            </div>
+          </div>
+          <div class="target-row">
+            <span class="target-pill bear">Bear $40–$55</span>
+            <span class="target-pill base">Base $68–$85</span>
+            <span class="target-pill bull">Bull $100–$118</span>
+          </div>
+        </div>
+        <div id="risk-eix" class="tab-content">
+          <div class="analysis-text"><strong>⚠ Do not enter May–October.</strong> CA fire season June–November makes this a seasonal risk window. Best entry: late November after quiet season. D/E 2.16x is the highest in the group. FCF negative. Dividend not covered by free cash. This is a 5% position max.</div>
+          <div style="margin-top:10px;">
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Wildfire</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:90%;background:var(--red);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Balance Sheet</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:80%;background:var(--red);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Regulatory</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:60%;background:var(--amber);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Execution</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:30%;background:var(--green);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PCG -->
+    <div class="stock-card" data-tags="speculative wildfire" data-pe="10" data-upside="40" data-yield="1.2" data-growth="9">
+      <div class="card-top">
+        <div>
+          <div class="card-ticker" style="color:var(--red);">PCG</div>
+          <div class="card-name">PG&E Corporation</div>
+          <div><span class="conviction-badge conv-4">High-risk speculative</span></div>
+        </div>
+        <div class="card-price">
+          <div class="card-price-num">~$16</div>
+          <div class="card-mktcap">Mkt cap ~$36B</div>
+        </div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric-item"><div class="metric-item-label">FWD P/E</div><div class="metric-item-value good">9.95x</div></div>
+        <div class="metric-item"><div class="metric-item-label">EPS CAGR</div><div class="metric-item-value good">9%+ 2027-30</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIV YIELD</div><div class="metric-item-value warn">1.2%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DEBT/EQUITY</div><div class="metric-item-value bad">1.88x</div></div>
+        <div class="metric-item"><div class="metric-item-label">FCF</div><div class="metric-item-value bad">-$5.57B TTM</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIABLO CANYON</div><div class="metric-item-value good">+20yr license</div></div>
+        <div class="metric-item"><div class="metric-item-label">DATA CTR PIPE</div><div class="metric-item-value warn">4.6 GW eng.</div></div>
+        <div class="metric-item"><div class="metric-item-label">2026 EPS</div><div class="metric-item-value">$1.64–$1.66</div></div>
+        <div class="metric-item"><div class="metric-item-label">ANALYST TGT</div><div class="metric-item-value good">$22–$28</div></div>
+      </div>
+      <div class="card-analysis">
+        <div class="analysis-tab-row">
+          <div class="atab active" onclick="switchTab(this,'thesis-pcg')">Thesis</div>
+          <div class="atab" onclick="switchTab(this,'bullbear-pcg')">Bull / Bear</div>
+          <div class="atab" onclick="switchTab(this,'risk-pcg')">Risk</div>
+        </div>
+        <div id="thesis-pcg" class="tab-content active">
+          <div class="analysis-text">
+            <strong>Cheapest stock in the sector. Two bankruptcies. 40% below consensus target.</strong> At ~$16 vs $22–$28 analyst targets, PCG trades at a 36–43% discount. Why? Two bankruptcies (2001, 2019) and wildfire reform dependency. But Q1 2026 showed 30% core EPS growth YoY. Diablo Canyon NRC license renewed for 20 years. 4.6GW data center projects in final engineering.<br><br>
+            The entire thesis hinges on California passing wildfire liability reform (SB 254 / AB 1054 expansion). If it passes, PCG re-rates from 10x toward 15–17x — that's $24–$28 on 2026 EPS guidance. If it fails, management has warned of capital plan reevaluation.
+          </div>
+        </div>
+        <div id="bullbear-pcg" class="tab-content">
+          <div class="bull-bear-row">
+            <div class="bull-box">
+              <div class="bb-label">BULL</div>
+              <div class="bb-point">CA wildfire reform passes SB 254 — re-rates to 15–17x</div>
+              <div class="bb-point">Wells Fargo $25 target, BMO $28 outperform — wide upside</div>
+              <div class="bb-point">Diablo Canyon + 4.6GW data center = dual growth engines</div>
+            </div>
+            <div class="bear-box">
+              <div class="bb-label">BEAR</div>
+              <div class="bb-point">Legislature fails on wildfire reform — plan reevaluation</div>
+              <div class="bb-point">Third Point exited Q1 2026 — smart money leaving</div>
+              <div class="bb-point">Two prior bankruptcies — structural leverage risk persists</div>
+            </div>
+          </div>
+          <div class="target-row">
+            <span class="target-pill bear">Bear $11–$13</span>
+            <span class="target-pill base">Base $22–$23</span>
+            <span class="target-pill bull">Bull $25–$28</span>
+          </div>
+        </div>
+        <div id="risk-pcg" class="tab-content">
+          <div class="analysis-text"><strong>Insider selling flagged:</strong> $3.8M in sales last 3 months with no buying. Levered FCF -$5.57B. Payout ratio minimal (20% target by 2028). This is the cheapest stock in the group AND the highest risk. Maximum 5% position. Single catalyst: wildfire legislation vote expected late 2026.</div>
+          <div style="margin-top:10px;">
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Legislative</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:85%;background:var(--red);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Wildfire</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:75%;background:var(--red);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Balance Sheet</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:70%;background:var(--amber);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Exec. Track Rec.</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:40%;background:var(--amber);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEE -->
+    <div class="stock-card" data-tags="avoid" data-pe="24" data-upside="4" data-yield="2.7" data-growth="8">
+      <div class="card-top">
+        <div>
+          <div class="card-ticker" style="color:var(--text2);">NEE</div>
+          <div class="card-name">NextEra Energy</div>
+          <div><span class="conviction-badge conv-5">Wait for pullback</span></div>
+        </div>
+        <div class="card-price">
+          <div class="card-price-num">~$93</div>
+          <div class="card-mktcap">Mkt cap ~$194B</div>
+        </div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric-item"><div class="metric-item-label">FWD P/E</div><div class="metric-item-value bad">23.9x</div></div>
+        <div class="metric-item"><div class="metric-item-label">EPS CAGR</div><div class="metric-item-value">8%+ to 2032</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIV YIELD</div><div class="metric-item-value warn">2.7%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DEBT/EQUITY</div><div class="metric-item-value warn">1.57x</div></div>
+        <div class="metric-item"><div class="metric-item-label">LT DEBT</div><div class="metric-item-value bad">$93.9B</div></div>
+        <div class="metric-item"><div class="metric-item-label">FCF</div><div class="metric-item-value bad">None</div></div>
+        <div class="metric-item"><div class="metric-item-label">DILUTION</div><div class="metric-item-value bad">$4B ATM</div></div>
+        <div class="metric-item"><div class="metric-item-label">2026 EPS</div><div class="metric-item-value">$3.92–$4.02</div></div>
+        <div class="metric-item"><div class="metric-item-label">52WK GAIN</div><div class="metric-item-value warn">+44%</div></div>
+      </div>
+      <div class="card-analysis">
+        <div class="analysis-tab-row">
+          <div class="atab active" onclick="switchTab(this,'thesis-nee')">Thesis</div>
+          <div class="atab" onclick="switchTab(this,'bullbear-nee')">Bull / Bear</div>
+          <div class="atab" onclick="switchTab(this,'risk-nee')">Risk</div>
+        </div>
+        <div id="thesis-nee" class="tab-content active">
+          <div class="analysis-text">
+            <strong>World's largest renewable energy company. Best franchise, worst entry point.</strong> FPL serves 6M+ Florida customers with a $90–$100B capex plan through 2032. Energy Resources has 33GW backlog with contract repricing at +$20/MWh. Q1 2026 adj EPS $1.09 beat 11%. Large-load discussion pipeline of 12GW with ≥1 hyperscaler signature expected before year-end.<br><br>
+            The problem: up 44% in 52 weeks, $93.9B in long-term debt, dividend paid from debt/equity, and a $4B ATM offering actively diluting shareholders. The franchise is exceptional. The price is not.
+          </div>
+        </div>
+        <div id="bullbear-nee" class="tab-content">
+          <div class="bull-bear-row">
+            <div class="bull-box">
+              <div class="bb-label">BULL</div>
+              <div class="bb-point">First large-load hyperscaler contract signed before year-end</div>
+              <div class="bb-point">Florida economic growth drives FPL rate base 11% annually</div>
+              <div class="bb-point">Renewable backlog repriced $20/MWh above prior contracts</div>
+            </div>
+            <div class="bear-box">
+              <div class="bb-label">BEAR</div>
+              <div class="bb-point">24x PE with no FCF — most expensive in the group</div>
+              <div class="bb-point">$93.9B long-term debt — rising rates compress returns</div>
+              <div class="bb-point">$4B ATM programme dilutes continuously</div>
+            </div>
+          </div>
+          <div class="target-row">
+            <span class="target-pill bear">Bear $72–$80</span>
+            <span class="target-pill base">Base $95–$99</span>
+            <span class="target-pill bull">Bull $107–$111</span>
+          </div>
+        </div>
+        <div id="risk-nee" class="tab-content">
+          <div class="analysis-text"><strong>Classification: Great business, fully priced stock.</strong> Analyst consensus target $96.92 is just 4% above current price after a 44% run. The margin of safety is essentially zero. Wait for a 15–20% correction to ~$75–$80 before building a position. At that entry, the 8% EPS CAGR creates genuine compounding value.</div>
+          <div style="margin-top:10px;">
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Valuation</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:85%;background:var(--red);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Debt Load</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:75%;background:var(--red);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Dilution</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:60%;background:var(--amber);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Business Risk</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:20%;background:var(--green);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DUK -->
+    <div class="stock-card" data-tags="nobrainer cautious" data-pe="18.5" data-upside="12" data-yield="3.4" data-growth="6">
+      <div class="card-top">
+        <div>
+          <div class="card-ticker" style="color:var(--teal);">DUK</div>
+          <div class="card-name">Duke Energy</div>
+          <div><span class="conviction-badge conv-1">Steady compounder</span></div>
+        </div>
+        <div class="card-price">
+          <div class="card-price-num">~$124</div>
+          <div class="card-mktcap">Mkt cap ~$97B</div>
+        </div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric-item"><div class="metric-item-label">FWD P/E</div><div class="metric-item-value good">18.5x</div></div>
+        <div class="metric-item"><div class="metric-item-label">EPS CAGR</div><div class="metric-item-value">5–7% to 2030</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIV YIELD</div><div class="metric-item-value">3.4%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DEBT/EQUITY</div><div class="metric-item-value warn">1.61x</div></div>
+        <div class="metric-item"><div class="metric-item-label">CAPEX PLAN</div><div class="metric-item-value warn">$103B</div></div>
+        <div class="metric-item"><div class="metric-item-label">ECON DEV PIPE</div><div class="metric-item-value">7.6 GW</div></div>
+        <div class="metric-item"><div class="metric-item-label">DILUTION</div><div class="metric-item-value warn">+0.52% YoY</div></div>
+        <div class="metric-item"><div class="metric-item-label">2026 EPS</div><div class="metric-item-value">$6.55–$6.80</div></div>
+        <div class="metric-item"><div class="metric-item-label">ANALYST TGT</div><div class="metric-item-value good">$139</div></div>
+      </div>
+      <div class="card-analysis">
+        <div class="analysis-tab-row">
+          <div class="atab active" onclick="switchTab(this,'thesis-duk')">Thesis</div>
+          <div class="atab" onclick="switchTab(this,'bullbear-duk')">Bull / Bear</div>
+          <div class="atab" onclick="switchTab(this,'risk-duk')">Risk</div>
+        </div>
+        <div id="thesis-duk" class="tab-content active">
+          <div class="analysis-text">
+            <strong>Largest US regulated utility. Sleep-at-night compounder.</strong> 8M+ electric customers across Carolinas, Indiana, Florida, Ohio, Kentucky. Q1 2026 beat on both EPS ($1.93 vs $1.876) and revenue ($9.18B vs $8.49B consensus). Closed $5.3B in strategic transactions. 7.6GW economic development projects secured.<br><br>
+            The Carolinas and Florida are among America's fastest-growing data centre markets. Duke's regulated structure means no generation risk. 5–7% EPS CAGR, 3.4% yield, $139 analyst target = ~12% upside from current price.
+          </div>
+        </div>
+        <div id="bullbear-duk" class="tab-content">
+          <div class="bull-bear-row">
+            <div class="bull-box">
+              <div class="bb-label">BULL</div>
+              <div class="bb-point">Carolinas / Florida data center boom drives load growth</div>
+              <div class="bb-point">$103B capex drives earnings base growth 9.6% through 2030</div>
+              <div class="bb-point">12% upside to analyst consensus with stable dividend</div>
+            </div>
+            <div class="bear-box">
+              <div class="bb-label">BEAR</div>
+              <div class="bb-point">$103B capex = sustained debt + equity issuance</div>
+              <div class="bb-point">5–7% CAGR is lowest growth rate in high-conviction picks</div>
+              <div class="bb-point">Rate case risk across 5 states not as clean as single-state utilities</div>
+            </div>
+          </div>
+          <div class="target-row">
+            <span class="target-pill bear">Bear $113</span>
+            <span class="target-pill base">Base $130–$139</span>
+            <span class="target-pill bull">Bull $146</span>
+          </div>
+        </div>
+        <div id="risk-duk" class="tab-content">
+          <div class="analysis-text"><strong>Classification: Great business, good stock.</strong> DUK is the portfolio anchor — not exciting, won't blow up. 23 analysts with Buy consensus and $139 target. The $103B capex is the main risk — it requires ongoing capital market access. Beta 0.40 = low volatility. Best choice for risk-averse investors in this sector.</div>
+          <div style="margin-top:10px;">
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Regulatory</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:35%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Wildfire</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:5%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Balance Sheet</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:40%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Capex Exec.</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:45%;background:var(--amber);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SO -->
+    <div class="stock-card" data-tags="avoid" data-pe="22" data-upside="5" data-yield="3.1" data-growth="7">
+      <div class="card-top">
+        <div>
+          <div class="card-ticker" style="color:var(--text2);">SO</div>
+          <div class="card-name">Southern Company</div>
+          <div><span class="conviction-badge conv-5">Good business, wait for dip</span></div>
+        </div>
+        <div class="card-price">
+          <div class="card-price-num">~$94</div>
+          <div class="card-mktcap">Mkt cap ~$106B</div>
+        </div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric-item"><div class="metric-item-label">FWD P/E</div><div class="metric-item-value warn">22x</div></div>
+        <div class="metric-item"><div class="metric-item-label">EPS CAGR</div><div class="metric-item-value">~10% to 2030</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIV YIELD</div><div class="metric-item-value">3.1%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DEBT/EQUITY</div><div class="metric-item-value warn">1.69x</div></div>
+        <div class="metric-item"><div class="metric-item-label">CAPEX PLAN</div><div class="metric-item-value">$81B 5yr</div></div>
+        <div class="metric-item"><div class="metric-item-label">DATA CTR GROWTH</div><div class="metric-item-value good">+17% YoY</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIV INCREASES</div><div class="metric-item-value good">24 consecutive</div></div>
+        <div class="metric-item"><div class="metric-item-label">2026 EPS TGT</div><div class="metric-item-value">$4.55 mid</div></div>
+        <div class="metric-item"><div class="metric-item-label">ANALYST TGT</div><div class="metric-item-value">$98.78</div></div>
+      </div>
+      <div class="card-analysis">
+        <div class="analysis-tab-row">
+          <div class="atab active" onclick="switchTab(this,'thesis-so')">Thesis</div>
+          <div class="atab" onclick="switchTab(this,'bullbear-so')">Bull / Bear</div>
+          <div class="atab" onclick="switchTab(this,'risk-so')">Risk</div>
+        </div>
+        <div id="thesis-so" class="tab-content active">
+          <div class="analysis-text">
+            <strong>Georgia is the #1 emerging data center market. 17% data center sales growth.</strong> Atlanta and surrounding Georgia counties are exploding with Microsoft, Google, Meta, and AWS infrastructure. 24 consecutive dividend increases. DOE $26.5B loan materially lowers cost of capital. Q1 2026 EPS $1.32 beat $1.211 estimate. 39,000 new residential customers in 2025.<br><br>
+            Still needs $1.8B in equity through 2030. Analyst consensus is Hold with target $98.78 — basically flat to current. The data centre story is real; the valuation has caught up to it.
+          </div>
+        </div>
+        <div id="bullbear-so" class="tab-content">
+          <div class="bull-bear-row">
+            <div class="bull-box">
+              <div class="bb-label">BULL</div>
+              <div class="bb-point">Georgia data center buildout accelerates beyond 17% growth</div>
+              <div class="bb-point">DOE $26.5B loan lowers capex cost and improves returns</div>
+              <div class="bb-point">24yr dividend growth streak continues — institutional ownership</div>
+            </div>
+            <div class="bear-box">
+              <div class="bb-label">BEAR</div>
+              <div class="bb-point">22x forward PE = thesis already priced by market</div>
+              <div class="bb-point">$1.8B equity need through 2030 = ATM dilution</div>
+              <div class="bb-point">Hold consensus with target barely above current price</div>
+            </div>
+          </div>
+          <div class="target-row">
+            <span class="target-pill bear">Bear $84–$88</span>
+            <span class="target-pill base">Base $95–$99</span>
+            <span class="target-pill bull">Bull $103–$112</span>
+          </div>
+        </div>
+        <div id="risk-so" class="tab-content">
+          <div class="analysis-text"><strong>Classification: Great business, full valuation.</strong> SO is the Dividend Aristocrat of this group. It will never blow up. But at 22x forward with Hold consensus, there's no urgency. Wait for a correction to 18–19x (roughly $82–$85) — at that price, SO becomes genuinely compelling with 3.5%+ yield and 10% EPS growth.</div>
+          <div style="margin-top:10px;">
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Regulatory</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:30%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Wildfire</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:5%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Valuation</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:70%;background:var(--amber);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Dilution</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:40%;background:var(--amber);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXC -->
+    <div class="stock-card" data-tags="nobrainer cautious" data-pe="17.2" data-upside="6" data-yield="3.5" data-growth="6">
+      <div class="card-top">
+        <div>
+          <div class="card-ticker" style="color:var(--teal);">EXC</div>
+          <div class="card-name">Exelon</div>
+          <div><span class="conviction-badge conv-1">Underrated clean play</span></div>
+        </div>
+        <div class="card-price">
+          <div class="card-price-num">~$49</div>
+          <div class="card-mktcap">Mkt cap ~$50B</div>
+        </div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric-item"><div class="metric-item-label">FWD P/E</div><div class="metric-item-value good">17.2x</div></div>
+        <div class="metric-item"><div class="metric-item-label">EPS CAGR</div><div class="metric-item-value">5–7% top end</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIV YIELD</div><div class="metric-item-value good">3.5%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DEBT/EQUITY</div><div class="metric-item-value warn">1.74x</div></div>
+        <div class="metric-item"><div class="metric-item-label">BUSINESS TYPE</div><div class="metric-item-value good">Pure T&D</div></div>
+        <div class="metric-item"><div class="metric-item-label">RATE BASE CAGR</div><div class="metric-item-value good">7.9%</div></div>
+        <div class="metric-item"><div class="metric-item-label">WILDFIRE RISK</div><div class="metric-item-value good">None</div></div>
+        <div class="metric-item"><div class="metric-item-label">2026 EPS</div><div class="metric-item-value">$2.81–$2.91</div></div>
+        <div class="metric-item"><div class="metric-item-label">ANALYST TGT</div><div class="metric-item-value">$51.86</div></div>
+      </div>
+      <div class="card-analysis">
+        <div class="analysis-tab-row">
+          <div class="atab active" onclick="switchTab(this,'thesis-exc')">Thesis</div>
+          <div class="atab" onclick="switchTab(this,'bullbear-exc')">Bull / Bear</div>
+          <div class="atab" onclick="switchTab(this,'risk-exc')">Risk</div>
+        </div>
+        <div id="thesis-exc" class="tab-content active">
+          <div class="analysis-text">
+            <strong>Only pure T&D utility in the group. No generation risk. No fuel exposure. No wildfire.</strong> 10M customers across Chicago (ComEd), Philadelphia (PECO), and the Baltimore/DC corridor — three of the densest data centre markets in the country. 7.9% rate base CAGR from $41.7B capital plan. Pure wire utility = most predictable earnings in the group.<br><br>
+            17.2x forward PE is the cheapest among the "clean story" names. Beat Q1 2026 EPS by 2.63%, revenue by 4.75%. Management withdrew rate cases to manage affordability — regulator-smart move.
+          </div>
+        </div>
+        <div id="bullbear-exc" class="tab-content">
+          <div class="bull-bear-row">
+            <div class="bull-box">
+              <div class="bb-label">BULL</div>
+              <div class="bb-point">Chicago/Philly/DC data center demand drives ComEd, PECO, BGE</div>
+              <div class="bb-point">Pure T&D means no exposure to generation fuel/nuclear risks</div>
+              <div class="bb-point">Cheapest clean-story utility — deserves re-rate toward 19x</div>
+            </div>
+            <div class="bear-box">
+              <div class="bb-label">BEAR</div>
+              <div class="bb-point">FCF declined 48.9% — capex cycle eating all cash</div>
+              <div class="bb-point">7 regulatory jurisdictions = complex rate case management</div>
+              <div class="bb-point">Hold consensus — not a momentum pick</div>
+            </div>
+          </div>
+          <div class="target-row">
+            <span class="target-pill bear">Bear $44</span>
+            <span class="target-pill base">Base $50–$52</span>
+            <span class="target-pill bull">Bull $57–$60</span>
+          </div>
+        </div>
+        <div id="risk-exc" class="tab-content">
+          <div class="analysis-text"><strong>Classification: Good business, modestly undervalued.</strong> EXC is where you go when you want sector exposure without binary risk. 17.2x forward + 3.5% yield + 7.9% rate base growth = total return potential of ~10% annually with minimal drama. The $51.86 consensus target = 6% upside — modest but supported.</div>
+          <div style="margin-top:10px;">
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Regulatory</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:45%;background:var(--amber);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Wildfire</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:0%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Business Risk</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:20%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">FCF</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:55%;background:var(--amber);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SRE -->
+    <div class="stock-card" data-tags="cautious" data-pe="18" data-upside="10" data-yield="2.8" data-growth="8">
+      <div class="card-top">
+        <div>
+          <div class="card-ticker" style="color:var(--blue);">SRE</div>
+          <div class="card-name">Sempra</div>
+          <div><span class="conviction-badge conv-2">Texas growth + LNG optionality</span></div>
+        </div>
+        <div class="card-price">
+          <div class="card-price-num">~$93</div>
+          <div class="card-mktcap">Mkt cap ~$63B</div>
+        </div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric-item"><div class="metric-item-label">FWD P/E</div><div class="metric-item-value warn">18x</div></div>
+        <div class="metric-item"><div class="metric-item-label">EPS CAGR</div><div class="metric-item-value good">7–9% sector high</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIV YIELD</div><div class="metric-item-value">2.8%</div></div>
+        <div class="metric-item"><div class="metric-item-label">NET DEBT/EBITDA</div><div class="metric-item-value bad">5.96x</div></div>
+        <div class="metric-item"><div class="metric-item-label">FCF / SHARE</div><div class="metric-item-value bad">-$9.26</div></div>
+        <div class="metric-item"><div class="metric-item-label">PAYOUT RATIO</div><div class="metric-item-value bad">89%</div></div>
+        <div class="metric-item"><div class="metric-item-label">ONCOR STAKE</div><div class="metric-item-value good">80% Texas</div></div>
+        <div class="metric-item"><div class="metric-item-label">2026 EPS</div><div class="metric-item-value">$4.87–$5.37</div></div>
+        <div class="metric-item"><div class="metric-item-label">ANALYST TGT</div><div class="metric-item-value">$98–$108</div></div>
+      </div>
+      <div class="card-analysis">
+        <div class="analysis-tab-row">
+          <div class="atab active" onclick="switchTab(this,'thesis-sre')">Thesis</div>
+          <div class="atab" onclick="switchTab(this,'bullbear-sre')">Bull / Bear</div>
+          <div class="atab" onclick="switchTab(this,'risk-sre')">Risk</div>
+        </div>
+        <div id="thesis-sre" class="tab-content active">
+          <div class="analysis-text">
+            <strong>Dallas/Fort Worth via Oncor. The most underappreciated data center grid in the sector.</strong> Oncor (80% Sempra-owned) serves DFW — the single most active data centre market in the United States. Sempra targets 7–9% EPS CAGR, the highest explicit long-term growth target in the group. $65B capital plan 95% in regulated utilities (TX + CA).<br><br>
+            LNG wildcard: Port Arthur LNG and Sempra Infrastructure. If global LNG demand accelerates, this becomes a significant upside not priced into utility comps. Q1 2026 net income $1.04B from $0.92B (+13%).
+          </div>
+        </div>
+        <div id="bullbear-sre" class="tab-content">
+          <div class="bull-bear-row">
+            <div class="bull-box">
+              <div class="bb-label">BULL</div>
+              <div class="bb-point">Oncor serves DFW — America's hottest data center market</div>
+              <div class="bb-point">7–9% CAGR is sector-leading with $9B+ incremental upside</div>
+              <div class="bb-point">LNG optionality not priced in at current utility multiples</div>
+            </div>
+            <div class="bear-box">
+              <div class="bb-label">BEAR</div>
+              <div class="bb-point">89% payout ratio leaves zero for reinvestment</div>
+              <div class="bb-point">FCF -$9.26/share — dividend funded entirely by new debt</div>
+              <div class="bb-point">Net debt/EBITDA 5.96x = most leveraged balance sheet in group</div>
+            </div>
+          </div>
+          <div class="target-row">
+            <span class="target-pill bear">Bear $73–$80</span>
+            <span class="target-pill base">Base $95–$102</span>
+            <span class="target-pill bull">Bull $107–$115</span>
+          </div>
+        </div>
+        <div id="risk-sre" class="tab-content">
+          <div class="analysis-text"><strong>Classification: Good business in a leveraged wrapper.</strong> The Texas thesis is real. The financials are stretched. 89% payout from negative FCF means any credit market disruption threatens the dividend. Best owned in a portfolio context alongside a cleaner balance sheet name. Analyst Buy consensus with 10% upside.</div>
+          <div style="margin-top:10px;">
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Leverage</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:80%;background:var(--red);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Wildfire</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:25%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Regulatory CA</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:55%;background:var(--amber);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Payout Risk</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:70%;background:var(--red);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- XEL -->
+    <div class="stock-card" data-tags="speculative wildfire" data-pe="19" data-upside="15" data-yield="2.8" data-growth="9">
+      <div class="card-top">
+        <div>
+          <div class="card-ticker" style="color:var(--amber);">XEL</div>
+          <div class="card-name">Xcel Energy</div>
+          <div><span class="conviction-badge conv-3">Speculative upside — Google deal catalyst</span></div>
+        </div>
+        <div class="card-price">
+          <div class="card-price-num">~$79</div>
+          <div class="card-mktcap">Mkt cap ~$38B</div>
+        </div>
+      </div>
+      <div class="card-metrics">
+        <div class="metric-item"><div class="metric-item-label">FWD P/E</div><div class="metric-item-value warn">19x</div></div>
+        <div class="metric-item"><div class="metric-item-label">EPS CAGR</div><div class="metric-item-value good">9% guided avg</div></div>
+        <div class="metric-item"><div class="metric-item-label">DIV YIELD</div><div class="metric-item-value">2.8%</div></div>
+        <div class="metric-item"><div class="metric-item-label">DEBT/EQUITY</div><div class="metric-item-value warn">1.48x</div></div>
+        <div class="metric-item"><div class="metric-item-label">FCF</div><div class="metric-item-value bad">None</div></div>
+        <div class="metric-item"><div class="metric-item-label">GOOGLE DEAL</div><div class="metric-item-value good">15yr / 1,900MW</div></div>
+        <div class="metric-item"><div class="metric-item-label">WILDFIRE LOSS</div><div class="metric-item-value bad">$460–500M</div></div>
+        <div class="metric-item"><div class="metric-item-label">2026 EPS</div><div class="metric-item-value">$4.04–$4.16</div></div>
+        <div class="metric-item"><div class="metric-item-label">ANALYST TGT</div><div class="metric-item-value good">$91.67</div></div>
+      </div>
+      <div class="card-analysis">
+        <div class="analysis-tab-row">
+          <div class="atab active" onclick="switchTab(this,'thesis-xel')">Thesis</div>
+          <div class="atab" onclick="switchTab(this,'bullbear-xel')">Bull / Bear</div>
+          <div class="atab" onclick="switchTab(this,'risk-xel')">Risk</div>
+        </div>
+        <div id="thesis-xel" class="tab-content active">
+          <div class="analysis-text">
+            <strong>Strongest analyst consensus (Strong Buy, 19 analysts). 15% upside. Google 15yr deal.</strong> 1,900MW Google contract with Google funding all infrastructure and generating $1–1.5B in customer savings — a template for future hyperscaler deals. Record $60B capex plan. 9% EPS CAGR guided. CO, MN, TX service territory growing rapidly for data centres.<br><br>
+            The wildfire risk (Smokehouse Creek $460–500M, only $90M insurance remaining) is real but more manageable than EIX/PCG. Equity dilution via $1.2B follow-on at $65.50 (below current) is a known headwind.
+          </div>
+        </div>
+        <div id="bullbear-xel" class="tab-content">
+          <div class="bull-bear-row">
+            <div class="bull-box">
+              <div class="bb-label">BULL</div>
+              <div class="bb-point">Amazon/Microsoft follow Google — additional 15yr template deals</div>
+              <div class="bb-point">$7B+ incremental capital visibility beyond $60B base plan</div>
+              <div class="bb-point">Strong Buy consensus — most analyst conviction in the group</div>
+            </div>
+            <div class="bear-box">
+              <div class="bb-label">BEAR</div>
+              <div class="bb-point">Smokehouse Creek liability with $90M insurance remaining</div>
+              <div class="bb-point">$1.2B equity offering at $65.50 = structural dilution discount</div>
+              <div class="bb-point">No FCF — dividend funded from capital markets</div>
+            </div>
+          </div>
+          <div class="target-row">
+            <span class="target-pill bear">Bear $69–$77</span>
+            <span class="target-pill base">Base $84–$92</span>
+            <span class="target-pill bull">Bull $96–$100</span>
+          </div>
+        </div>
+        <div id="risk-xel" class="tab-content">
+          <div class="analysis-text"><strong>Classification: Good business, best momentum of the speculative tier.</strong> XEL has the best analyst setup of any stock in this analysis — 19 analysts, Strong Buy, $91.67 target. The wildfire risk is real but containable. Do not enter May–September. Best entry after fire season clarity in late October.</div>
+          <div style="margin-top:10px;">
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Wildfire</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:55%;background:var(--amber);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Dilution</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:50%;background:var(--amber);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Regulatory</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:35%;background:var(--green);"></div></div></div>
+            <div class="risk-bar-wrap"><div class="risk-bar-label">Exec. Risk</div><div class="risk-bar-track"><div class="risk-bar-fill" style="width:25%;background:var(--green);"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end stock-grid -->
+
+  <!-- CHARTS -->
+  <div class="section-label" style="margin-top:8px;">visual comparison</div>
+  <div class="charts-grid charts-section">
+    <div class="chart-card">
+      <div class="chart-title">Forward P/E — cheapest to most expensive</div>
+      <div class="chart-wrap"><canvas id="peChart" role="img" aria-label="Forward PE ratios for all 10 utility stocks">PCG 10x, EIX 11x, EXC 17x, SRE 18x, DUK 18.5x, PEG 18x, XEL 19x, AEP 21x, SO 22x, NEE 24x</canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">EPS CAGR target vs dividend yield</div>
+      <div class="chart-wrap"><canvas id="growthChart" role="img" aria-label="EPS CAGR and dividend yield comparison">Scatter of EPS growth targets vs dividend yields for 10 utilities</canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Upside to analyst consensus target (%)</div>
+      <div class="chart-wrap"><canvas id="upsideChart" role="img" aria-label="Analyst price target upside for each stock">PCG +40%, EIX +20%, XEL +15%, PEG +15%, DUK +12%, SRE +10%, AEP +8%, EXC +6%, SO +5%, NEE +4%</canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Debt / equity ratio — balance sheet risk</div>
+      <div class="chart-wrap"><canvas id="debtChart" role="img" aria-label="Debt to equity ratios for all 10 utilities">EIX 2.16x highest, PCG 1.88x, EXC 1.74x, SO 1.69x, DUK 1.61x, NEE 1.57x, AEP 1.54x, XEL 1.48x, SRE 1.15x, PEG 1.38x</canvas></div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="section-label">comparison table — all 10</div>
+  <div class="table-section">
+    <table class="comparison-table" id="compTable">
+      <thead>
+        <tr>
+          <th>TICKER</th>
+          <th>PRICE</th>
+          <th>MKT CAP</th>
+          <th>FWD P/E ↑</th>
+          <th>EPS CAGR</th>
+          <th>DIV YIELD</th>
+          <th>D/E RATIO</th>
+          <th>FCF</th>
+          <th>ANALYST TGT</th>
+          <th>UPSIDE</th>
+          <th>CONVICTION</th>
+          <th>WILDFIRE?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>PCG</td><td>~$16</td><td>~$36B</td><td class="td-good">9.95x</td><td>9%+ (27-30)</td><td>1.2%</td><td class="td-warn">1.88x</td><td class="td-bad">Neg</td><td class="td-good">$22–$28</td><td class="td-good">+40%</td><td>Speculative</td><td class="td-bad">High</td></tr>
+        <tr><td>EIX</td><td>~$70</td><td>~$27B</td><td class="td-good">11x</td><td>5–7%</td><td class="td-good">5.1%</td><td class="td-bad">2.16x</td><td class="td-bad">-$649M</td><td>$68–$88</td><td class="td-warn">+20%</td><td>Speculative</td><td class="td-bad">High</td></tr>
+        <tr><td>EXC</td><td>~$49</td><td>~$50B</td><td class="td-good">17.2x</td><td>5–7%</td><td class="td-good">3.5%</td><td class="td-warn">1.74x</td><td class="td-warn">Neg</td><td>$51.86</td><td>+6%</td><td>Buy</td><td class="td-good">None</td></tr>
+        <tr><td>SRE</td><td>~$93</td><td>~$63B</td><td class="td-warn">18x</td><td class="td-good">7–9%</td><td>2.8%</td><td class="td-warn">1.15x*</td><td class="td-bad">-$9.26/sh</td><td>$98–$108</td><td>+10%</td><td>Cautious</td><td>Low</td></tr>
+        <tr><td>DUK</td><td>~$124</td><td>~$97B</td><td class="td-good">18.5x</td><td>5–7%</td><td>3.4%</td><td class="td-warn">1.61x</td><td class="td-warn">Neg</td><td class="td-good">$139</td><td class="td-good">+12%</td><td>Buy</td><td class="td-good">None</td></tr>
+        <tr><td>PEG</td><td>~$78</td><td>~$40B</td><td class="td-good">18x</td><td>6–8%</td><td>3.4%</td><td class="td-good">1.38x</td><td class="td-good">Positive</td><td class="td-good">$90</td><td class="td-good">+15%</td><td>No-brainer</td><td class="td-good">None</td></tr>
+        <tr><td>XEL</td><td>~$79</td><td>~$38B</td><td class="td-warn">19x</td><td class="td-good">6–9%</td><td>2.8%</td><td class="td-warn">1.48x</td><td class="td-bad">None</td><td class="td-good">$91.67</td><td class="td-good">+15%</td><td>Speculative</td><td class="td-warn">Medium</td></tr>
+        <tr><td>AEP</td><td>~$130</td><td>~$70B</td><td class="td-warn">21x</td><td class="td-good">9%+</td><td>2.8%</td><td class="td-warn">1.54x</td><td class="td-bad">Neg</td><td>$135–$148</td><td>+8%</td><td>Cautious</td><td class="td-good">None</td></tr>
+        <tr><td>SO</td><td>~$94</td><td>~$106B</td><td class="td-warn">22x</td><td>~10%</td><td>3.1%</td><td class="td-warn">1.69x</td><td class="td-bad">Neg</td><td>$98.78</td><td>+5%</td><td>Wait</td><td class="td-good">None</td></tr>
+        <tr><td>NEE</td><td>~$93</td><td>~$194B</td><td class="td-bad">23.9x</td><td>8%+</td><td>2.7%</td><td class="td-warn">1.57x</td><td class="td-bad">None</td><td>$96.92</td><td>+4%</td><td>Wait</td><td class="td-good">None</td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:10px; color:var(--text3); margin-top:8px;">* SRE D/E per one source; net debt/EBITDA is 5.96x — the more relevant leverage metric. All prices and targets as of May 2026. Not investment advice.</div>
+  </div>
+
+  <!-- VERDICT SUMMARY -->
+  <div class="section-label">conviction summary</div>
+  <div class="verdict-section">
+    <div class="verdict-grid-outer">
+      <div class="verdict-item" style="border-color:rgba(0,230,118,0.3);">
+        <div class="verdict-item-ticker" style="color:var(--green);">BUY NOW</div>
+        <div class="verdict-item-call">PEG, DUK, EXC</div>
+        <div class="verdict-item-text">Cleanest balance sheets in the group. No wildfire exposure. Reasonable forward multiples (17–18.5x). Positive or near-positive FCF. EPS growth confirmed. PEG has the best risk/reward with nuclear upside optionality. DUK is the defensive anchor. EXC is the most undervalued clean story.</div>
+      </div>
+      <div class="verdict-item" style="border-color:rgba(68,138,255,0.3);">
+        <div class="verdict-item-ticker" style="color:var(--blue);">CAUTIOUS BUY</div>
+        <div class="verdict-item-call">AEP, SRE</div>
+        <div class="verdict-item-text">Genuine growth stories but valuation / balance sheet require discipline. AEP at 21x is expensive for a pipeline story that still needs to convert. SRE's 7–9% CAGR is exceptional but 89% payout + -$9.26 FCF/share means zero margin of safety if credit conditions tighten. Size conservatively — add on dips.</div>
+      </div>
+      <div class="verdict-item" style="border-color:rgba(255,193,7,0.3);">
+        <div class="verdict-item-ticker" style="color:var(--amber);">SPECULATIVE</div>
+        <div class="verdict-item-call">EIX, XEL, PCG</div>
+        <div class="verdict-item-text">Maximum 5% per position. All carry binary wildfire or regulatory risk. PCG cheapest at 10x but two prior bankruptcies. EIX at 11x has 40–80% upside IF wildfire resolves. XEL has strongest analyst consensus and Google deal. Do not enter EIX or PCG before November — CA/CO fire season active June–October.</div>
+      </div>
+      <div class="verdict-item" style="border-color:rgba(179,136,255,0.3);">
+        <div class="verdict-item-ticker" style="color:var(--purple);">WAIT FOR DIP</div>
+        <div class="verdict-item-call">NEE, SO</div>
+        <div class="verdict-item-text">Both are excellent businesses run by excellent management teams. Neither is worth buying today. NEE at 24x after +44% in 52 weeks with $94B in debt and no FCF has essentially no margin of safety. SO at 22x with Hold consensus and target flat to current is priced for perfection. Target: NEE at $75–$80, SO at $82–$85.</div>
+      </div>
+      <div class="verdict-item" style="border-color:var(--border); grid-column: span 1;">
+        <div class="verdict-item-ticker" style="color:var(--red);">TSLA ENERGY</div>
+        <div class="verdict-item-call">Not a utility play</div>
+        <div class="verdict-item-text">Tesla Energy (13% of TSLA revenue, 23% of gross profit in H1 2025) cannot be purchased separately. You buy the entire company including Automotive (75% rev), which is under significant competitive and brand pressure. TSLA is a bet on Elon Musk, FSD, and robotics — not a utility infrastructure investment.</div>
+      </div>
+      <div class="verdict-item" style="border-color:rgba(100,255,218,0.3);">
+        <div class="verdict-item-ticker" style="color:var(--teal);">SECTOR WARNING</div>
+        <div class="verdict-item-call">All 10 are correlated</div>
+        <div class="verdict-item-text">Every stock in this list benefits from the same macro thesis (AI power demand). In a recession, AI capex pull-back, or sustained rate rise cycle, all 10 get hurt simultaneously. 7 of 10 have negative FCF. Diversifying across all 10 does not reduce the macro risk — it concentrates it. Size the total sector allocation with that in mind.</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div>US UTILITY AI POWER PLAY · Analysis compiled May 2026 · Multi-session equity research</div>
+  <div class="footer-warn">⚠ NOT INVESTMENT ADVICE. For informational purposes only. All figures sourced from SEC filings and Q1 2026 earnings releases. Verify all data before making any investment decision.</div>
+</footer>
+
+<script>
+// --- TAB SWITCHING ---
+function switchTab(btn, contentId) {
+  const card = btn.closest('.stock-card');
+  card.querySelectorAll('.atab').forEach(t => t.classList.remove('active'));
+  card.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(contentId).classList.add('active');
+}
+
+// --- FILTER ---
+function filterCards(tag, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.stock-card').forEach(card => {
+    if (tag === 'all') {
+      card.dataset.hidden = 'false';
+    } else {
+      const tags = card.dataset.tags || '';
+      card.dataset.hidden = tags.includes(tag) ? 'false' : 'true';
+    }
+  });
+}
+
+// --- SORT ---
+function sortCards(criterion) {
+  const grid = document.getElementById('stockGrid');
+  const cards = Array.from(grid.querySelectorAll('.stock-card'));
+  if (!criterion) return;
+  cards.sort((a, b) => {
+    if (criterion === 'pe') return parseFloat(a.dataset.pe) - parseFloat(b.dataset.pe);
+    if (criterion === 'target') return parseFloat(b.dataset.upside) - parseFloat(a.dataset.upside);
+    if (criterion === 'yield') return parseFloat(b.dataset.yield) - parseFloat(a.dataset.yield);
+    if (criterion === 'growth') return parseFloat(b.dataset.growth) - parseFloat(a.dataset.growth);
+    return 0;
+  });
+  cards.forEach(c => grid.appendChild(c));
+}
+
+// --- CHARTS ---
+const COLORS = {
+  PCG: '#ff5252', EIX: '#ffc107', EXC: '#00e676', SRE: '#448aff',
+  DUK: '#64ffda', PEG: '#64ffda', XEL: '#ffc107', AEP: '#64ffda',
+  SO: '#8a8fa8', NEE: '#8a8fa8'
+};
+const labels = ['PCG','EIX','EXC','SRE','DUK','PEG','XEL','AEP','SO','NEE'];
+const peData = [9.95, 11, 17.2, 18, 18.5, 18, 19, 21, 22, 23.9];
+const barColors = labels.map(l => COLORS[l]);
+const gridColor = 'rgba(255,255,255,0.06)';
+const labelColor = '#4a5068';
+
+// PE Chart
+new Chart(document.getElementById('peChart'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      label: 'Forward P/E',
+      data: peData,
+      backgroundColor: barColors,
+      borderRadius: 4,
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { color: labelColor, font: { family: 'DM Mono', size: 10 } } },
+      y: { grid: { color: gridColor }, ticks: { color: labelColor, font: { family: 'DM Mono', size: 10 } }, min: 0, max: 28 }
+    }
+  }
+});
+
+// Growth/Yield Scatter
+const scatterData = [
+  {x: 9, y: 1.2, label: 'PCG'},
+  {x: 6, y: 5.1, label: 'EIX'},
+  {x: 6, y: 3.5, label: 'EXC'},
+  {x: 8, y: 2.8, label: 'SRE'},
+  {x: 6, y: 3.4, label: 'DUK'},
+  {x: 7, y: 3.4, label: 'PEG'},
+  {x: 9, y: 2.8, label: 'XEL'},
+  {x: 9, y: 2.8, label: 'AEP'},
+  {x: 10, y: 3.1, label: 'SO'},
+  {x: 8, y: 2.7, label: 'NEE'},
+];
+new Chart(document.getElementById('growthChart'), {
+  type: 'scatter',
+  data: {
+    datasets: scatterData.map(d => ({
+      label: d.label,
+      data: [{x: d.x, y: d.y}],
+      backgroundColor: COLORS[d.label],
+      pointRadius: 8,
+      pointHoverRadius: 10
+    }))
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `${ctx.dataset.label}: ${ctx.parsed.x}% CAGR / ${ctx.parsed.y}% yield`
+        }
+      }
+    },
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { color: labelColor, font: { family: 'DM Mono', size: 10 } }, title: { display: true, text: 'EPS CAGR target (%)', color: labelColor, font: { family: 'DM Mono', size: 10 } }, min: 4, max: 12 },
+      y: { grid: { color: gridColor }, ticks: { color: labelColor, font: { family: 'DM Mono', size: 10 } }, title: { display: true, text: 'Dividend yield (%)', color: labelColor, font: { family: 'DM Mono', size: 10 } }, min: 0.5, max: 6 }
+    }
+  }
+});
+
+// Upside Chart
+const upsideLabels = ['PCG','EIX','XEL','PEG','DUK','SRE','AEP','EXC','SO','NEE'];
+const upsideVals = [40, 20, 15, 15, 12, 10, 8, 6, 5, 4];
+const upsideColors = upsideVals.map(v => v >= 15 ? '#00e676' : v >= 10 ? '#ffc107' : '#8a8fa8');
+new Chart(document.getElementById('upsideChart'), {
+  type: 'bar',
+  data: {
+    labels: upsideLabels,
+    datasets: [{
+      label: '% upside to analyst target',
+      data: upsideVals,
+      backgroundColor: upsideColors,
+      borderRadius: 4,
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { color: labelColor, font: { family: 'DM Mono', size: 10 } } },
+      y: { grid: { color: gridColor }, ticks: { color: labelColor, font: { family: 'DM Mono', size: 10 }, callback: v => v + '%' }, min: 0 }
+    }
+  }
+});
+
+// Debt Chart
+const debtLabels = ['EIX','PCG','EXC','SO','DUK','NEE','AEP','XEL','PEG','SRE'];
+const debtVals = [2.16, 1.88, 1.74, 1.69, 1.61, 1.57, 1.54, 1.48, 1.38, 1.15];
+const debtColors = debtVals.map(v => v >= 2 ? '#ff5252' : v >= 1.6 ? '#ffc107' : '#00e676');
+new Chart(document.getElementById('debtChart'), {
+  type: 'bar',
+  data: {
+    labels: debtLabels,
+    datasets: [{
+      label: 'D/E ratio',
+      data: debtVals,
+      backgroundColor: debtColors,
+      borderRadius: 4,
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { color: labelColor, font: { family: 'DM Mono', size: 10 } } },
+      y: { grid: { color: gridColor }, ticks: { color: labelColor, font: { family: 'DM Mono', size: 10 } }, min: 0, max: 2.5 }
+    }
+  }
+});
+</script>
+</body>
+</html>
