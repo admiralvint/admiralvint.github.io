@@ -223,6 +223,18 @@
 
   <div class="card accent-left">
     <div class="card-top">
+      <div class="card-title">Kids Screentime Control</div>
+      <span class="card-badge b-infra">Infrastructure</span>
+    </div>
+    <p>Parental control system for enforcing screen time limits on kids' Bazzite Linux laptops, managed from a central web dashboard. A Python daemon runs on each laptop as root, detects active Wayland sessions, accumulates usage in local SQLite, enforces daily limits and time-window rules, and reads browser history from Firefox and Brave (both Flatpaks with non-standard paths). Rules are fetched from and usage synced to the server every 15 seconds.</p>
+    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">The FastAPI server runs in a Proxmox LXC reachable over Tailscale. The dashboard shows per-device usage bars, time windows, and recently visited sites with real-time updates — plus a force-logout that attempts a clean KDE Plasma dbus session shutdown before falling back to SIGTERM.</p>
+    <div class="stack">
+      <span>Python</span><span>FastAPI</span><span>SQLite</span><span>Alpine.js</span><span>Chart.js</span><span>Tailwind CSS</span><span>Proxmox LXC</span><span>Tailscale</span><span>Bazzite</span><span>KDE Plasma</span>
+    </div>
+  </div>
+
+  <div class="card accent-left">
+    <div class="card-top">
       <div class="card-title">Jälle Lab — Monitoring Platform</div>
       <span class="card-badge b-iot">IoT / Infrastructure</span>
     </div>
