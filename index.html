@@ -257,25 +257,37 @@
 
   <div class="card">
     <div class="card-top">
-      <div class="card-title">Serverless AI Pipeline Suite</div>
+      <div class="card-title">AI Automation Pipelines</div>
       <span class="card-badge b-ai">AI / AWS</span>
     </div>
-    <p>Three production AI automations on AWS Lambda, orchestrated around Claude Sonnet via Amazon Bedrock. All run end-to-end without human intervention and return structured outputs consumed directly by downstream systems.</p>
-    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">Includes: a daily Google Ads anomaly reporter publishing to Notion; a post-call sales scoring system writing to CRM within seconds of a call ending; and a RAG support bot with multi-turn memory grounded in internal documentation.</p>
+    <p>Several internal automation pipelines for a manufacturing-analytics company, all built on Claude via Amazon Bedrock. A weekly LLM-based QA system replaced manual ticket sampling with comprehensive coverage — scoring agent responses and synthesising per-agent coaching docs. A knowledge-extraction pipeline processed 379 support tickets into 261 extractions and 40 domain guides for roughly $12.</p>
+    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">Also includes a LinkedIn-to-cold-email BD tool that does prospect research, infers buying signals, and drafts a personalised email with fit score in a single Claude call; and a Lambda suite for scheduled Google Ads anomaly reporting, sales call scoring, and RAG-grounded internal support.</p>
     <div class="stack">
-      <span>AWS Lambda</span><span>Amazon Bedrock</span><span>Claude Sonnet</span><span>S3</span><span>Python</span><span>RAG</span>
+      <span>AWS Lambda</span><span>Amazon Bedrock</span><span>Claude Sonnet</span><span>S3</span><span>DynamoDB</span><span>EventBridge</span><span>CRM API</span><span>Streamlit</span><span>Python</span>
     </div>
   </div>
 
   <div class="card">
     <div class="card-top">
-      <div class="card-title">Automated QA for Customer Support</div>
-      <span class="card-badge b-ai">AI / Automation</span>
+      <div class="card-title">AI-Powered Customer Tools</div>
+      <span class="card-badge b-ai">AI / AWS</span>
     </div>
-    <p>Replaces sampled manual QA with full weekly coverage. Pulls support conversations from the CRM, evaluates each against a QA playbook via LLM, and produces structured per-agent reports with scores and rationale.</p>
-    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">Shifted coverage from dozens of spot-checks per quarter to full auditable coverage every week.</p>
+    <p>Two customer-facing AI products for the same company. A website sales assistant answers visitor questions, captures leads, and creates CRM contacts with full conversation transcripts attached — built on a Lambda rather than a native CRM chatflow to avoid LLM timeout constraints.</p>
+    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">An analytics layer over a fleet of IoT production-monitoring devices lets the support team ask natural-language questions about device connectivity and signal behaviour for any device and date range, returning cost-tracked snapshots grounded in internal documentation.</p>
     <div class="stack">
-      <span>Python</span><span>Vertex AI</span><span>Gemini</span><span>HubSpot API</span><span>GCP</span>
+      <span>AWS Lambda</span><span>Amazon Bedrock</span><span>Claude Sonnet</span><span>API Gateway</span><span>S3</span><span>DynamoDB</span><span>Cross-account IAM/STS</span><span>JavaScript</span><span>Python</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="card-title">Hardware QA &amp; Test Lab</div>
+      <span class="card-badge b-iot">Hardware / QA</span>
+    </div>
+    <p>A controlled test lab for production-monitoring hardware, running 58 automated tests across firmware upgrades, connectivity stress, and signal accuracy before changes reach customers. A Python runner on a Raspberry Pi drives devices over serial, automates signal injection through the device CLI, and produces a JSON + Markdown report for every run.</p>
+    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">Documents the EMC field-failure patterns behind real-world "device offline" reports, with customer-side fixes attached to each pattern.</p>
+    <div class="stack">
+      <span>Python</span><span>Raspberry Pi</span><span>GPIO</span><span>pySerial</span><span>Pi-hole</span><span>UniFi API</span><span>ESP32</span>
     </div>
   </div>
 
