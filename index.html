@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -200,24 +201,13 @@
 
   <div class="card accent-left">
     <div class="card-top">
-      <div class="card-title">Countersteer</div>
-      <span class="card-badge b-web">Web App</span>
-    </div>
-    <p>Motorcycle news aggregator available at <a href="https://www.countersteer.cc" target="_blank" style="color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent);">www.countersteer.cc</a>. Scrapes multiple relevant news sources into a single feed. Self-hosted on Hetzner with Docker and Caddy.</p>
-    <div class="stack">
-      <span>Python</span><span>Docker</span><span>Caddy</span><span>Hetzner</span>
-    </div>
-  </div>
-
-  <div class="card accent-left">
-    <div class="card-top">
       <div class="card-title">Proxmox Homelab</div>
       <span class="card-badge b-infra">Infrastructure</span>
     </div>
-    <p>Started on a Raspberry Pi over the winter — weather monitoring, MQTT broker for sensors, Grafana dashboards, and a Minecraft server all running on a single board. Outgrew it and migrated the whole stack to a separate computer running Proxmox VE, now hosting multiple LXC containers and VMs. Hardened with Tailscale overlay, UFW, fail2ban, and automated weekly backups. Host metrics flow into InfluxDB with a custom Grafana dashboard.</p>
-    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">Hosts a growing set of custom applications — including <em>Uudised</em>, a self-hosted Flask news aggregator that uses the Gemini API to summarise articles into a daily digest.</p>
+    <p>A Proxmox VE cluster running my self-hosted world across a fleet of LXC containers: a weather/MQTT/InfluxDB/Grafana sensor stack, self-hosted Git (Forgejo), a Mattermost team chat, and a personal life dashboard. Every container sits on a Tailscale overlay and is hardened with UFW, fail2ban, unattended-upgrades, and automated backups; host metrics flow into InfluxDB with a custom Grafana dashboard.</p>
+    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">Public services are exposed under a single domain through a Caddy + Cloudflare Tunnel gateway — no open inbound ports. Custom apps include <em>Uudised</em>, a self-hosted Flask news aggregator that summarises articles into a daily digest via the OpenRouter API.</p>
     <div class="stack">
-      <span>Raspberry Pi</span><span>Proxmox VE</span><span>LXC</span><span>Docker</span><span>Tailscale</span><span>InfluxDB</span><span>Grafana</span><span>Flask</span><span>Gemini API</span>
+      <span>Proxmox VE</span><span>LXC</span><span>Docker</span><span>Tailscale</span><span>Cloudflare Tunnel</span><span>Caddy</span><span>Forgejo</span><span>InfluxDB</span><span>Grafana</span><span>Mosquitto</span><span>Flask</span>
     </div>
   </div>
 
@@ -226,8 +216,8 @@
       <div class="card-title">Kids Screentime Control</div>
       <span class="card-badge b-infra">Infrastructure</span>
     </div>
-    <p>Parental control system for enforcing screen time limits on kids' Bazzite Linux laptops, managed from a central web dashboard. A Python daemon runs on each laptop as root, detects active Wayland sessions, accumulates usage in local SQLite, enforces daily limits and time-window rules, and reads browser history from Firefox and Brave (both Flatpaks with non-standard paths). Rules are fetched from and usage synced to the server every 15 seconds.</p>
-    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">The FastAPI server runs in a Proxmox LXC reachable over Tailscale. The dashboard shows per-device usage bars, time windows, and recently visited sites with real-time updates — plus a force-logout that attempts a clean KDE Plasma dbus session shutdown before falling back to SIGTERM.</p>
+    <p>Parental control system enforcing screen time limits across my kids' Bazzite Linux laptops, managed from a central web dashboard. A Python daemon runs on each laptop as root, detects active Wayland sessions, accumulates usage in local SQLite, enforces daily limits and time-window rules, and reads browser history from Firefox and Brave (both Flatpaks with non-standard paths). Rules are fetched from and usage synced to the server every 15 seconds.</p>
+    <p style="font-size:0.82rem; color:var(--dim); margin-bottom:14px;">The FastAPI server runs in a Proxmox LXC reachable over Tailscale. The dashboard shows per-child usage bars, live online indicators, a 14-day history chart, and recently visited sites — with bonus-time overrides and one-tap "block for the rest of today" controls that zero a child's limit and force a clean KDE Plasma dbus logout before falling back to SIGTERM.</p>
     <div class="stack">
       <span>Python</span><span>FastAPI</span><span>SQLite</span><span>Alpine.js</span><span>Chart.js</span><span>Tailwind CSS</span><span>Proxmox LXC</span><span>Tailscale</span><span>Bazzite</span><span>KDE Plasma</span>
     </div>
