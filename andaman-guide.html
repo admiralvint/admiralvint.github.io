@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Andaman Coast — nine nights in Krabi &amp; Koh Lanta</title>
+<style>
+:root{
+  --paper:#FBF4E9;
+  --paper-2:#F5EADA;
+  --card:#FFFBF4;
+  --ink:#241C16;
+  --ink-soft:#5A4B40;
+  --jade:#0F7A6C;
+  --jade-deep:#0A5449;
+  --ribbon:#D6216B;
+  --marigold:#E0961A;
+  --sand:#E3D4BB;
+  --serif:Georgia,"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --measure:38rem;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:3.6rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:18px;line-height:1.72;
+  -webkit-font-smoothing:antialiased
+}
+.wrap{max-width:64rem;margin:0 auto;padding:0 1.5rem}
+.col{max-width:var(--measure)}
+p{margin:0 0 1.15rem}
+a{color:var(--jade-deep)}
+h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.16;margin:0;letter-spacing:-.012em}
+em{font-style:italic}
+strong{font-weight:700}
+
+.label{
+  font-family:var(--sans);font-size:.68rem;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ribbon);margin:0 0 .7rem
+}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:60;background:rgba(251,244,233,.94);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--sand)}
+nav .wrap{display:flex;align-items:center;gap:.1rem;height:3.4rem;overflow-x:auto;scrollbar-width:none}
+nav .wrap::-webkit-scrollbar{display:none}
+nav a{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft);text-decoration:none;
+  padding:.4rem .6rem;border-radius:20px;white-space:nowrap}
+nav a:hover,nav a:focus-visible{background:var(--paper-2);color:var(--ink)}
+nav .home{color:var(--ribbon);font-weight:700;letter-spacing:.06em;padding-left:0;margin-right:.4rem}
+
+/* ---------- hero ---------- */
+.hero{position:relative;background:linear-gradient(180deg,#F9F0E1 0%,#F3E3CC 58%,#E9D6BA 100%);
+  padding:4rem 0 0;overflow:hidden}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{font-size:clamp(2.2rem,6vw,4.1rem);max-width:15ch;color:var(--ink)}
+.hero .kicker{font-family:var(--sans);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--jade-deep);margin-bottom:1.1rem}
+.hero .stand{font-size:1.18rem;max-width:34rem;color:var(--ink-soft);margin-top:1.3rem;font-style:italic}
+.hero .byline{font-family:var(--sans);font-size:.78rem;color:var(--ink-soft);margin-top:1.6rem;
+  padding-top:1rem;border-top:1px solid rgba(36,28,22,.14);max-width:34rem}
+.karst{display:none}
+figure.fig{margin:2rem 0;border-radius:12px;overflow:hidden;background:var(--paper-2);position:relative}
+figure.fig img{display:block;width:100%;aspect-ratio:var(--ar,21/9);object-fit:cover}
+figure.fig figcaption{font-family:var(--sans);font-size:.68rem;color:var(--ink-soft);
+  padding:.5rem .2rem 0;display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;align-items:baseline}
+figure.fig figcaption .cap{font-size:.82rem;color:var(--ink);font-style:italic;font-family:var(--serif)}
+figure.fig figcaption a{color:var(--ink-soft);text-decoration:none;opacity:.75}
+figure.fig figcaption a:hover{color:var(--jade);opacity:1;text-decoration:underline}
+figure.fig.bleed{border-radius:0;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);width:100vw;max-width:100vw}
+figure.fig.bleed figcaption{max-width:64rem;margin:0 auto;padding:.5rem 1.5rem 0}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin:2rem 0}
+.gallery figure.fig{margin:0}
+.heroshot{position:relative;margin:0;width:100%;height:min(64vh,540px);overflow:hidden}
+.heroshot img{width:100%;height:100%;object-fit:cover;display:block}
+.heroshot::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(36,28,22,.52) 0%,rgba(36,28,22,.18) 45%,rgba(251,244,233,.96) 100%)}
+.herotext{position:absolute;inset:auto 0 0;z-index:3;padding-bottom:2.2rem}
+.heroshot .credit{position:absolute;right:.7rem;top:.6rem;z-index:4;font-family:var(--sans);
+  font-size:.6rem;color:rgba(255,255,255,.72);text-decoration:none;background:rgba(0,0,0,.28);
+  padding:.18rem .5rem;border-radius:20px}
+.heroshot .credit:hover{color:#fff}
+.hero{padding:0}
+.hero h1{color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+.hero .kicker{color:#F5D9A8}
+.hero .stand{color:rgba(255,255,255,.92);text-shadow:0 1px 14px rgba(0,0,0,.5)}
+.hero .byline{color:var(--ink-soft);border-top-color:rgba(36,28,22,.2)}
+@media(max-width:700px){.heroshot{height:min(70vh,460px)}}
+
+/* ---------- sections ---------- */
+section{padding:3.8rem 0}
+section+section{border-top:1px solid var(--sand)}
+.shead{margin-bottom:1.7rem}
+.shead h2{font-size:clamp(1.6rem,3.6vw,2.3rem);max-width:22ch}
+.intro{font-size:1.06rem}
+.intro::first-letter{
+  float:left;font-size:3.5rem;line-height:.86;font-weight:700;
+  margin:.22rem .55rem 0 0;color:var(--ribbon)
+}
+h3{font-size:1.28rem;margin:2.4rem 0 .8rem}
+h3:first-child{margin-top:0}
+ul,ol{margin:0 0 1.2rem;padding-left:1.3rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--jade)}
+
+/* ---------- devices ---------- */
+.pull{
+  font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.34;font-weight:700;color:var(--jade-deep);
+  border-left:4px solid var(--ribbon);padding:.35rem 0 .35rem 1.3rem;margin:2rem 0;max-width:32rem
+}
+.note{
+  background:var(--card);border:1px solid var(--sand);border-radius:10px;
+  padding:1.15rem 1.3rem;margin:1.7rem 0;font-size:.97rem
+}
+.note p:last-child{margin-bottom:0}
+.note .label{color:var(--jade)}
+.note.heads .label{color:var(--marigold)}
+.note.heads{background:#FDF6E6;border-color:#EBD9AE}
+.note.hard{background:var(--ink);border-color:var(--ink);color:#EDE2D3}
+.note.hard .label{color:var(--marigold)}
+.note.hard strong{color:#fff}
+
+/* ---------- night strip ---------- */
+.plans{background:var(--paper-2);border-radius:14px;padding:1.5rem;margin:1.8rem 0}
+.ptabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.3rem}
+.ptabs button{font-family:var(--sans);font-size:.8rem;background:transparent;
+  border:1px solid var(--sand);color:var(--ink-soft);padding:.5rem .9rem;border-radius:20px;cursor:pointer}
+.ptabs button:hover{border-color:var(--jade)}
+.ptabs button[aria-pressed="true"]{background:var(--jade);border-color:var(--jade);color:#fff;font-weight:600}
+.ptabs button:focus-visible{outline:2px solid var(--ribbon);outline-offset:2px}
+.strip{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+.night{border-radius:7px;padding:.5rem .35rem .6rem;min-height:4.9rem;position:relative;
+  background:#fff;border:1px solid var(--sand);text-align:center}
+.night .dw{font-family:var(--sans);font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:#9C8B7C}
+.night .dt{font-family:var(--sans);font-size:.86rem;font-weight:700;color:var(--ink)}
+.night .base{font-family:var(--sans);font-size:.58rem;margin-top:.4rem;line-height:1.3;color:var(--ink-soft)}
+.night.krabi{background:#E4F1EE;border-color:#B9DBD4}
+.night.railay{background:#FBE9F1;border-color:#F0C2D6}
+.night.lanta{background:#FDF2DC;border-color:#EDD7A8}
+.night.out{background:#F2ECE2;border-color:var(--sand)}
+.night .mv{position:absolute;top:.28rem;right:.35rem;font-size:.68rem;color:var(--ribbon)}
+.night .eid{display:block;margin-top:.32rem;font-family:var(--sans);font-size:.54rem;
+  letter-spacing:.05em;color:var(--marigold);font-weight:700;text-transform:uppercase}
+.plan-say{margin-top:1.1rem;font-size:.97rem;color:var(--ink-soft);min-height:3.4em}
+.plan-say b{color:var(--ink)}
+.key{display:flex;flex-wrap:wrap;gap:1rem;margin-top:.9rem;font-family:var(--sans);
+  font-size:.7rem;color:var(--ink-soft)}
+.key i{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:.35rem;vertical-align:-1px}
+@media(max-width:820px){.strip{grid-template-columns:repeat(5,1fr)}}
+
+/* ---------- sight entries ---------- */
+.sight{padding:1.5rem 0;border-bottom:1px solid var(--sand)}
+.sight:last-child{border-bottom:0}
+.sight h3{margin:0 0 .1rem;font-size:1.24rem;display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
+.badge{font-family:var(--sans);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:.18rem .5rem;border-radius:20px;white-space:nowrap}
+.badge.go{background:var(--jade);color:#fff}
+.badge.maybe{background:#F3E3CC;color:var(--ink-soft)}
+.badge.skip{background:var(--paper-2);color:#9C8B7C}
+.sight .prac{font-family:var(--sans);font-size:.8rem;color:var(--ink-soft);margin:.5rem 0 .7rem}
+.sight .prac span{margin-right:1.1rem;white-space:nowrap}
+.seeit{display:inline-flex;gap:.3rem;flex-wrap:wrap;vertical-align:middle;margin-left:.4rem}
+.seeit a.lk{font-family:var(--sans);font-size:.63rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.07em;text-decoration:none;border:1px solid var(--sand);border-radius:20px;
+  padding:.14rem .5rem;color:var(--ink-soft);background:var(--card);white-space:nowrap;transition:all .15s}
+.seeit a.lk:hover,.seeit a.lk:focus-visible{border-color:var(--jade);color:var(--jade);background:#fff}
+a.plink{color:var(--jade-deep);text-decoration:none;border-bottom:1px dotted var(--jade);
+  padding-bottom:1px}
+a.plink:hover,a.plink:focus-visible{border-bottom-style:solid;background:#EAF3F1}
+a.plink::after{content:"\2197";font-size:.7em;vertical-align:super;margin-left:.1em;opacity:.65}
+td .seeit{margin-left:.5rem}
+.sight p{margin-bottom:.6rem}
+.sight.dim h3{color:var(--ink-soft)}
+
+/* ---------- tables ---------- */
+.tscroll{overflow-x:auto;margin:1.6rem 0}
+table{width:100%;border-collapse:collapse;font-size:.95rem;min-width:30rem}
+th{text-align:left;font-family:var(--sans);font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--ink-soft);font-weight:700;padding:.5rem .8rem .5rem 0;border-bottom:2px solid var(--ink)}
+td{padding:.7rem .8rem .7rem 0;border-bottom:1px solid var(--sand);vertical-align:top}
+td:first-child{font-weight:700}
+tbody tr:hover{background:var(--card)}
+
+/* ---------- stay ---------- */
+.rooms{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1rem;margin:1.5rem 0}
+.room{background:var(--card);border:1px solid var(--sand);border-radius:10px;padding:1.1rem 1.2rem}
+.room h3{font-size:1.06rem;margin:0 0 .12rem}
+.room .where{font-family:var(--sans);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--ribbon);display:block;margin-bottom:.6rem;font-weight:600}
+.room p{font-size:.92rem;color:var(--ink-soft);margin-bottom:.7rem}
+.tags{display:flex;flex-wrap:wrap;gap:.3rem}
+.tag{font-family:var(--sans);font-size:.66rem;border:1px solid var(--sand);background:var(--paper);
+  border-radius:20px;padding:.18rem .55rem;color:var(--ink-soft)}
+.tag.q{border-color:var(--marigold);color:#9A6608}
+
+/* ---------- day cards ---------- */
+.days{margin:1.6rem 0}
+.dayc{display:flex;gap:1.2rem;padding:1.1rem 0;border-bottom:1px solid var(--sand);align-items:flex-start}
+.dayc:last-child{border-bottom:0}
+.dayc .n{flex:none;width:4.6rem;text-align:right}
+.dayc .n b{display:block;font-size:1.5rem;line-height:1;color:var(--ribbon)}
+.dayc .n span{font-family:var(--sans);font-size:.66rem;color:var(--ink-soft);letter-spacing:.05em}
+.dayc .d h3{font-size:1.05rem;margin:0 0 .18rem}
+.dayc .d p{font-size:.94rem;color:var(--ink-soft);margin:0}
+
+/* ---------- checklist ---------- */
+.checks{margin:1.4rem 0}
+.check{display:flex;gap:.9rem;padding:.9rem 0;border-bottom:1px solid var(--sand);cursor:pointer;align-items:flex-start}
+.check:last-child{border-bottom:0}
+.box{width:1.15rem;height:1.15rem;border:2px solid #B9A991;border-radius:4px;flex:none;
+  margin-top:.3rem;position:relative;background:#fff;transition:all .15s}
+.check[data-on="1"] .box{background:var(--jade);border-color:var(--jade)}
+.check[data-on="1"] .box::after{content:"";position:absolute;left:5px;top:1px;width:4px;height:9px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.check[data-on="1"] .t{opacity:.42}
+.check:focus-visible{outline:2px solid var(--ribbon);outline-offset:3px;border-radius:4px}
+.t b{display:block;font-size:1rem}
+.t span{font-size:.92rem;color:var(--ink-soft)}
+.reset{font-family:var(--sans);font-size:.74rem;background:transparent;border:1px solid var(--sand);
+  color:var(--ink-soft);padding:.4rem .8rem;border-radius:20px;cursor:pointer}
+.reset:hover{border-color:var(--jade);color:var(--jade)}
+
+/* ---------- appendix ---------- */
+details.appx{background:var(--paper-2);border-radius:12px;padding:1.2rem 1.4rem;margin-top:1.5rem}
+details.appx summary{font-family:var(--sans);font-size:.92rem;font-weight:600;cursor:pointer;color:var(--jade-deep)}
+details.appx summary::marker{color:var(--ribbon)}
+details.appx>p{margin-top:1rem;font-size:.94rem;color:var(--ink-soft)}
+.patch{background:var(--ink);border-radius:8px;margin:1rem 0;overflow:hidden}
+.ptop{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:.6rem .9rem;
+  background:rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.1)}
+.ptop b{font-family:var(--sans);font-size:.74rem;color:#E4D8C8;font-weight:600}
+.ptop button{font-family:var(--sans);font-size:.68rem;background:transparent;
+  border:1px solid rgba(255,255,255,.25);color:#C6B7A5;padding:.28rem .6rem;border-radius:20px;cursor:pointer;flex:none}
+.ptop button:hover{color:#fff;border-color:var(--marigold)}
+.patch pre{margin:0;padding:.9rem;overflow-x:auto;font-size:.72rem;line-height:1.6;
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#CDBFAE;tab-size:2}
+
+.sources{font-size:.86rem;color:var(--ink-soft);columns:2;column-gap:2.4rem}
+.sources p{break-inside:avoid;margin-bottom:.9rem}
+.sources b{font-family:var(--sans);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--ink);display:block}
+@media(max-width:640px){.sources{columns:1}}
+
+footer{background:var(--ink);color:#B3A392;padding:2.6rem 0;font-size:.9rem;margin-top:0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
+footer b{color:var(--marigold);font-family:var(--sans);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase}
+footer a{color:var(--marigold);text-decoration:none;font-family:var(--sans);font-size:.78rem}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="home" href="#top">Andaman</a>
+    <a href="#when">When you’re going</a>
+    <a href="#basing">Where to base</a>
+    <a href="#krabi">Krabi</a>
+    <a href="#water">On the water</a>
+    <a href="#lanta">Koh Lanta</a>
+    <a href="#phuket">Phuket?</a>
+    <a href="#sleep">Sleeping</a>
+    <a href="#moving">Getting around</a>
+    <a href="#plan">The nine days</a>
+    <a href="#book">Before you book</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="heroshot">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Railay%2C_Krabi%2C_Thailand.jpg?width=2000" alt="Limestone karsts and longtail boats at Railay, Krabi">
+    <a class="credit" href="https://commons.wikimedia.org/wiki/File:Railay%2C_Krabi%2C_Thailand.jpg" target="_blank" rel="noopener">Vyacheslav Argenberg · CC BY 4.0</a>
+    <div class="herotext"><div class="wrap">
+    <p class="kicker">Nine nights · 4–13 March 2027</p>
+    <h1>The coast of standing stone</h1>
+    <p class="stand">Krabi and Koh Lanta — the beaches worth the boat ride, the temple worth 1,260 steps, and the day trip everybody asks about that you shouldn’t bother with.</p>
+    </div></div>
+  </div>
+  <div class="wrap">
+    <p class="byline">Two people, peak season, €125 a night. Flights booked, nothing else is. Check everything before you pay — list at the end.</p>
+  </div>
+  <svg class="karst" viewBox="0 0 1200 250" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 250 L0 168 Q22 150 30 128 Q40 96 58 100 Q74 104 82 132 Q92 118 104 130 Q116 142 126 168 Q140 138 158 146 Q172 152 178 176 L190 250 Z" fill="#0F7A6C" opacity=".16"/>
+    <path d="M240 250 L246 160 Q258 120 276 124 Q292 128 298 158 Q310 140 322 156 Q334 172 338 200 L344 250 Z" fill="#0F7A6C" opacity=".16"/>
+    <path d="M420 250 L428 142 Q440 100 462 106 Q482 112 488 148 Q500 128 514 144 Q528 160 532 196 L538 250 Z" fill="#0F7A6C" opacity=".16"/>
+    <path d="M640 250 L648 176 Q660 146 678 152 Q694 158 700 184 L708 250 Z" fill="#0F7A6C" opacity=".16"/>
+    <path d="M820 250 L828 150 Q842 108 864 114 Q884 120 890 156 Q902 136 916 152 Q930 168 934 204 L940 250 Z" fill="#0F7A6C" opacity=".16"/>
+    <path d="M1060 250 L1068 166 Q1082 132 1102 138 Q1120 144 1126 174 Q1138 156 1150 172 Q1162 188 1166 216 L1172 250 Z" fill="#0F7A6C" opacity=".16"/>
+
+    <path d="M90 250 L98 190 Q112 152 136 158 Q158 164 164 198 Q178 176 194 194 Q210 212 214 250 Z" fill="#0F7A6C" opacity=".3"/>
+    <path d="M330 250 L340 182 Q356 138 382 146 Q404 153 410 192 Q424 170 440 190 Q456 210 460 250 Z" fill="#0F7A6C" opacity=".3"/>
+    <path d="M560 250 L570 196 Q584 160 606 166 Q626 172 632 202 Q646 184 660 202 Q674 220 678 250 Z" fill="#0F7A6C" opacity=".3"/>
+    <path d="M740 250 L750 174 Q766 132 792 140 Q814 147 820 186 Q834 164 850 184 Q866 204 870 250 Z" fill="#0F7A6C" opacity=".3"/>
+    <path d="M960 250 L970 200 Q984 164 1006 170 Q1026 176 1032 206 Q1046 188 1060 206 Q1074 224 1078 250 Z" fill="#0F7A6C" opacity=".3"/>
+
+    <path d="M0 250 L10 214 Q30 186 58 194 Q82 201 88 226 Q102 208 120 224 Q136 238 140 250 Z" fill="#0A5449" opacity=".55"/>
+    <path d="M470 250 L482 216 Q500 188 526 196 Q548 203 554 228 Q568 210 584 226 Q598 240 602 250 Z" fill="#0A5449" opacity=".55"/>
+    <path d="M880 250 L892 210 Q912 180 940 188 Q964 195 970 224 Q986 204 1004 222 Q1020 238 1024 250 Z" fill="#0A5449" opacity=".55"/>
+    <path d="M1140 250 L1150 220 Q1166 198 1188 204 Q1200 208 1200 228 L1200 250 Z" fill="#0A5449" opacity=".55"/>
+  </svg>
+</header>
+
+
+<section id="when">
+  <div class="wrap"><div class="col">
+    <div class="shead"><p class="label">First things first</p><h2>You’ve picked the right fortnight</h2></div>
+    <p class="intro">Early March is the last clean stretch of the Andaman dry season, and that matters more than anything else you could plan around. The sea is flat, every island route runs, nothing gets cancelled for weather, and the water sits at a bathlike 29–30°C.</p>
+    <p>What you pay is heat and company. Highs of 33–34°C, a UV index of 12 — the top of the scale — and the busiest weeks of the year. Neither matters if you do the hard things early and book the good rooms now.</p>
+
+    <div class="pull">Two rules run through everything below: climb at dawn, and be on the boat before nine.</div>
+
+    <p>Rain figures disagree wildly — 24mm and “driest month of the year” from one source, 71mm across seventeen days from another. Plan on short showers, not washouts. Mornings are driest.</p>
+
+    <h3>The thing nobody’s told you yet</h3>
+    <p><strong>Eid al-Fitr falls in the middle of your Koh Lanta stay.</strong> Ramadan runs to roughly 8 March 2027, which puts Eid on or about the 9th or 10th — days two and three on the island. The exact date is set by moon sighting and can shift a day, so it’s worth re-checking in February.</p>
+    <p>Koh Lanta is substantially Muslim — the Old Town has Buddhist temples, Chinese shrines and mosques on the same street, and Moken sea-gypsy families in stilt houses over the water. Eid is the biggest day in that calendar.</p>
+    <p>A few local kitchens shift hours; resort restaurants won’t notice. Ferries get busier, since Southern Thai families travel for Eid. Mostly it’s a gift — a celebration that appears on nobody’s itinerary.</p>
+    <div class="note">
+      <p class="label">What to do about it</p>
+      <p>Nothing, except leave those two days unplanned. Don’t move the trip.</p>
+    </div>
+  </div></div>
+</section>
+
+
+<section id="basing">
+  <div class="wrap">
+    <div class="col">
+      <div class="shead"><p class="label">The one real decision</p><h2>Nine nights, three ways to carve them up</h2></div>
+      <p class="intro">Here’s the catch nobody notices until they’re standing in it. You land at Bangkok at 16:35 on the Thursday, connect onward, and reach a Krabi hotel around ten at night — so day one is gone. And the Saturday at the end is already your travel day to Bangkok. Nine nights buys you eight usable days, one of which you spend moving.</p>
+      <p>Under the current plan that leaves <strong>three full days on the mainland</strong>, and Krabi has five things worth doing. You’re cutting two of them jet-lagged, with no slack. That’s the actual problem — not the four-nights-versus-five balance.</p>
+    </div>
+
+    <div class="plans">
+      <div class="ptabs" role="group" aria-label="Base options">
+        <button data-plan="A" aria-pressed="false">As it stands</button>
+        <button data-plan="B" aria-pressed="true">Sleep on Railay</button>
+        <button data-plan="C" aria-pressed="false">More mainland</button>
+      </div>
+      <div class="strip" id="strip"></div>
+      <div class="key">
+        <span><i style="background:#E4F1EE;border:1px solid #B9DBD4"></i>Krabi mainland</span>
+        <span><i style="background:#FBE9F1;border:1px solid #F0C2D6"></i>Railay</span>
+        <span><i style="background:#FDF2DC;border:1px solid #EDD7A8"></i>Koh Lanta</span>
+        <span><i style="background:#F2ECE2;border:1px solid #E3D4BB"></i>Travel</span>
+        <span style="color:var(--ribbon)">⇄ you move</span>
+      </div>
+      <p class="plan-say" id="planSay"></p>
+    </div>
+
+    <div class="col">
+      <h3>What I’d do</h3>
+      <p>Sleep on Railay for one night. It’s the single change that buys the most, because Railay isn’t a beach you visit — it’s a place you stay. It’s cut off from the road entirely, reachable only by longtail, and as a day trip you see it between ten and four, which is precisely when every boat from Ao Nang has unloaded there. Stay the night and you get the sunset, the dawn, and the morning you leave. It stops eating a whole day and starts being the best twenty hours of the trip.</p>
+      <p>While you’re at it, put the mainland nights at <strong><a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJWx-RelC_UTAR_l_QqSjgRJo" target="_blank" rel="noopener">Klong Muang</a></strong> rather than <a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJozAi_g_AUTARTUmi8H7r7Fw" target="_blank" rel="noopener">Ao Nang</a>. Twenty minutes further north, quieter, cleaner, a long calm beach and just enough restaurants to be comfortable. You trade nightlife and cheap transfers for space — in March, worth it.</p>
+      <div class="note heads">
+        <p class="label">The honest cost</p>
+        <p>You lose Tiger Cave and the Emerald Pool. I’d cut the Emerald Pool anyway — 400 baht for a pretty jungle pond on a 10:00–15:30 window, shared with tour buses. Tiger Cave is a genuine loss. If that stings, take the third option instead and keep it.</p>
+      </div>
+      <p>What I wouldn’t do is split three ways — Ao Nang, then Railay, then Lanta. That’s four moves in nine nights with four more Bangkok nights after. Too much packing for a trip whose second half is supposed to be doing nothing.</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="krabi">
+  <div class="wrap"><div class="col">
+    <div class="shead"><p class="label">The mainland</p><h2>What’s actually worth your days in Krabi</h2></div><figure class="fig bleed" style="--ar:21/9"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/West_Rai_Leh_%283%29.jpg?width=1500" alt="West Railay Beach under limestone cliffs" loading="lazy" decoding="async"><figcaption><span class="cap">West Railay, late afternoon.</span><a href="https://commons.wikimedia.org/wiki/File:West_Rai_Leh_%283%29.jpg" target="_blank" rel="noopener">Krzysztof Golik · CC BY-SA 4.0 · Wikimedia Commons</a></figcaption></figure>
+    <p class="intro">Krabi is built on limestone — towers of it rising out of flat green water, undercut at the base where the tide has been chewing for a few million years. Everything good here is either on that rock or looking at it.</p>
+
+    <div class="sight">
+      <h3>Railay &amp; Phra Nang <span class="badge go">Don't miss</span></h3><span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJi-WSB57qUTARgVAhfLGL2GE" target="_blank" rel="noopener">Railay map</a><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJf2k-CoPqUTARdDu7bnB2sQw" target="_blank" rel="noopener">Phra Nang map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Railay+Beach+Krabi" target="_blank" rel="noopener">Reviews</a></span>
+      <p class="prac"><span>15 min by longtail from Ao Nang</span><span>No road access</span></p>
+      <p>Four beaches on a peninsula no road reaches, under cliffs that made this a world rock-climbing destination. Phra Nang is the postcard one — cave shrine at one end, water the colour of bottle glass.</p>
+      <p>Go early or stay the night. Between ten and four it belongs to the day boats.</p><figure class="fig" style="--ar:16/9"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sunset_over_the_limestone_island_at_Phra_Nang_Cave_Beach_Krabi.jpg?width=1300" alt="Sunset at Phra Nang Cave Beach" loading="lazy" decoding="async"><figcaption><span class="cap">Phra Nang at sunset, once the day boats have gone.</span><a href="https://commons.wikimedia.org/wiki/File:Sunset_over_the_limestone_island_at_Phra_Nang_Cave_Beach_Krabi.jpg" target="_blank" rel="noopener">Janjira Jane · CC BY-SA 4.0 · Wikimedia Commons</a></figcaption></figure>
+    </div>
+
+    <div class="sight">
+      <h3>Khao Ngon Nak <span class="badge go">Do this one</span></h3><span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJZQojLee-UTAR1DcVmrBvpy8" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Dragon+Crest+Ngon+Nak+Nature+Trail+Krabi" target="_blank" rel="noopener">Reviews</a></span>
+      <p class="prac"><span>7.4 km return</span><span>498 m</span><span>1.5–2 hrs up</span><span>200 baht</span></p>
+      <p>Also called Dragon Crest, and missing from your itinerary page entirely — which is a shame, because plenty of people who’ve done both rate this view above Tiger Cave’s. Jungle trail, steady climb, a cliff ledge over the whole coastline.</p>
+      <p>Two warnings. The trailhead is near <a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJS5MuzDK5UTARCTg8EnlSfeY" target="_blank" rel="noopener">Tubkaek Beach</a> and it is genuinely badly signposted — at least one traveller gave up trying to find it. Pin the ranger station before you leave. And carry two litres of water minimum — in March this is a first-thing climb, not a mid-morning stroll. One caution on that: sources disagree about when the gate actually opens. Some report 06:00; Google currently lists 08:00–14:00. If the later hours are right, a true dawn start isn’t possible and you’ll be climbing in real heat, so check before you plan the day around it.</p>
+    </div>
+
+    <div class="sight">
+      <h3>Tiger Cave Temple <span class="badge go">If you have the day</span></h3><span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJO2O10qqWUTAREYioi4E8t1Q" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Tiger+Cave+Temple+Krabi" target="_blank" rel="noopener">Reviews</a></span>
+      <p class="prac"><span>1,260 steps</span><span>45–60 min from Ao Nang</span></p>
+      <p>A working temple on a limestone outcrop, up a staircase that will make your legs shake. Hilltop Buddha, a panorama over the plains, and — unlike most viewpoints — a real place of worship rather than a shrine bolted onto a view.</p>
+      <p>Go early for the heat. Watch your bag at the base — there are reports of theft.</p><figure class="fig" style="--ar:4/5"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Krabi_-_Wat_Tham_Suea_-_0015.jpg?width=900" alt="The staircase and hilltop shrine at Wat Tham Suea" loading="lazy" decoding="async"><figcaption><span class="cap">1,260 steps. Your legs will know about it.</span><a href="https://commons.wikimedia.org/wiki/File:Krabi_-_Wat_Tham_Suea_-_0015.jpg" target="_blank" rel="noopener">Stefan Fussan · CC BY-SA 3.0 · Wikimedia Commons</a></figcaption></figure>
+    </div>
+
+    <div class="sight">
+      <h3>Krabi Town &amp; Ko Klang <span class="badge maybe">Half a day</span></h3><span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJfQbFSJeUUTAR4kjdevnAwB0" target="_blank" rel="noopener">Wat Kaeo map</a><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJwYDBwE2TUTARAIT7HHexgH4" target="_blank" rel="noopener">Ko Klang map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Krabi+Town" target="_blank" rel="noopener">Reviews</a></span>
+      <p>The provincial capital, and the one place on this list where you meet Krabi rather than tourism. Wat Kaeo Korawaram, a night market, and across the water the Muslim fishing island of Ko Klang. No ocean views, no nightlife, and that’s the point.</p>
+    </div>
+
+    <div class="sight dim">
+      <h3>The Emerald Pool <span class="badge skip">Cut it</span></h3><span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJ_6eLjQ0cUjAR7kXSfRh6n60" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJOwMaF-8dUjAR2d62c50_k8s" target="_blank" rel="noopener">Hot springs</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Emerald+Pool+Krabi" target="_blank" rel="noopener">Reviews</a></span>
+      <p class="prac"><span>~400 baht</span><span>Hours disputed — check</span><span>No food or alcohol inside</span></p>
+      <p>Sa Morakot, a spring-fed pool in a wildlife sanctuary, coloured an improbable green by warm mineral water running through limestone. It’s lovely, and there’s a Blue Lagoon and a set of hot springs nearby. But it’s inland, the published opening window varies by source (one guide says 10:00–15:30, Google lists 08:30–16:30), the rocks are slippery, and you’ll share it. With only three mainland days it’s the first thing that goes.</p>
+    </div>
+
+    <h3>And if you have more time than days</h3>
+    <p>Kayaking the clear water at <strong><a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJH228pv2_UTARQTx0YG82SvA" target="_blank" rel="noopener">Khlong Root</a></strong>. <strong><a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJhdeVO5nqUTARXEDrwb-WhIw" target="_blank" rel="noopener">Diamond Cave</a></strong>, which pairs neatly with a Railay walk. Muay Thai at the <a class="plink" href="https://www.google.com/maps/search/?api=1&query=Ao+Nang+Krabi+Boxing+Stadium" target="_blank" rel="noopener">Ao Nang stadium</a>. A half-day cooking class — they’re everywhere and they’re good.</p>
+    <p>And <strong><a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJX5d1Mn4oUTARMK0fzC4Xf44" target="_blank" rel="noopener">Khao Sok</a></strong>, two hours away, where a flooded valley called <a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJxZCK1Ww2UTARWjZkqRtgG9U" target="_blank" rel="noopener">Cheow Lan Lake</a> has limestone towers rising straight out of it. Boat hire runs around 2,000 baht plus 300 in park fees. It’s one of the most extraordinary landscapes in Thailand and it does not fit into a four-night Krabi stay. File it under next time, or under reasons to rebalance.</p>
+  </div></div>
+</section>
+
+
+<section id="water">
+  <div class="wrap"><div class="col">
+    <div class="shead"><p class="label">Boat days</p><h2>Getting out on the water</h2></div><figure class="fig" style="--ar:2/1"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/7.Ko_Hong_Island_-_Andaman_Sea_-_Krabi_Province%2C_Thailand.jpg?width=1500" alt="Ko Hong island and turquoise water, Krabi" loading="lazy" decoding="async"><figcaption><span class="cap">Ko Hong — get here before nine.</span><a href="https://commons.wikimedia.org/wiki/File:7.Ko_Hong_Island_-_Andaman_Sea_-_Krabi_Province%2C_Thailand.jpg" target="_blank" rel="noopener">Wolfgang Holzem · CC BY-SA 4.0 · Wikimedia Commons</a></figcaption></figure>
+    <p class="intro">Three boat days, maybe four. Resist more — they stack into a particular tiredness, all sun and salt and engine noise, and by the fourth you stop seeing anything.</p>
+
+    <div class="note hard">
+      <p class="label">If you remember one thing from this page</p>
+      <p><strong>Before nine in the morning is a completely different trip from after eleven.</strong> Hong Island in particular takes the overflow from Phuket’s day-tour fleet, which lands around midday. Someone who did it at sunrise says the timing changed the experience entirely. This one detail decides whether your boat days are magic or a queue.</p>
+    </div>
+
+    <p>There are two ways to buy that. Book an early-bird speedboat departure — they start around 1,250 baht a head. Or charter a private longtail, which seats up to six and costs a flat <strong>2,500 baht whether there are two of you or six</strong>. For a couple who want their own departure time and their own route, that’s the best-value thing on this entire page. The cheap group tours put fifteen to twenty people in a boat.</p>
+
+    <div class="sight">
+      <h3>The Hong Islands <span class="badge go">The pick</span></h3><span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJAUqh8za4UTARK1VenHfVB6M" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Koh+Hong+Krabi" target="_blank" rel="noopener">Reviews</a></span>
+      <p>A cluster of cliff-walled bays north of Ao Nang, and at the centre of the main island a tidal lagoon completely enclosed by rock — <em>hong</em> means "room," and that’s exactly what it feels like. There’s also a 400-step climb to a genuine 360-degree viewpoint, twenty to thirty minutes each way, taking in the whole archipelago and the karsts running north into Phang Nga Bay.</p>
+      <p>More beautiful than the 4 Islands circuit and much calmer. Less varied, if variety is what you’re after.</p>
+    </div>
+
+    <div class="sight">
+      <h3>Koh Rok <span class="badge go">From Lanta</span></h3><span class="seeit"><a class="lk" href="https://www.google.com/maps/search/?api=1&query=Koh+Rok+Nok+Thailand" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Koh+Rok+Nok+Thailand" target="_blank" rel="noopener">Reviews</a></span>
+      <p>Two small islands about 40 km south of Koh Lanta, inside the national park — white sand, water you can see straight through, and the best snorkelling within easy reach of anywhere you’ll be staying. This is the Lanta headline trip.</p>
+    </div>
+
+    <div class="sight">
+      <h3>The 4 Islands <span class="badge maybe">The classic</span></h3><span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJw3FDHZbBUTARWgu53c0WuuI" target="_blank" rel="noopener">Poda</a><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJqyiq_4zBUTARlfikk_8n-CE" target="_blank" rel="noopener">Thale Waek</a><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJ9xj8yo3BUTARctV5t_DjT_8" target="_blank" rel="noopener">Tup</a><a class="lk" href="https://www.tripadvisor.com/Search?q=4+Islands+Tour+Krabi" target="_blank" rel="noopener">Reviews</a></span>
+      <p>Tup, Chicken, Poda and Phra Nang, strung together in a day. It’s the greatest-hits circuit and it’s fun, but it’s also the most heavily trafficked boat tour in Krabi — worst at Phra Nang Cave Beach and on the sandbar at Tup, where at low tide you can walk between islands along with several hundred other people.</p>
+    </div>
+
+    <div class="sight">
+      <h3>Phang Nga Bay &amp; James Bond Island <span class="badge maybe">If you must</span></h3><span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJ8QtsYcOsUTARY16P2GPh_RM" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=James+Bond+Island+Phang+Nga" target="_blank" rel="noopener">Reviews</a></span>
+      <p>Genuinely spectacular, genuinely overrun. If you go, do it as part of a Koh Yao Noi day rather than the standard tour out of Ao Nang.</p>
+    </div>
+
+    <div class="sight dim">
+      <h3>Koh Phi Phi <span class="badge skip">Not in March</span></h3><span class="seeit"><a class="lk" href="https://www.google.com/maps/search/?api=1&query=Koh+Phi+Phi+Don+Thailand" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Koh+Phi+Phi+Don+Thailand" target="_blank" rel="noopener">Reviews</a></span>
+      <p>Beautiful, famous, and in peak season a zoo. Either skip it or fold it into your transfer between Lanta and Krabi rather than spending a whole day getting there and back.</p>
+    </div>
+  </div></div>
+</section>
+
+
+<section id="lanta">
+  <div class="wrap">
+    <div class="col">
+      <div class="shead"><p class="label">The slow half</p><h2>Five nights on Koh Lanta</h2></div><figure class="fig bleed" style="--ar:21/9"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/2016_Prowincja_Krabi%2C_Ko_Lanta_Yai%2C_Pla%C5%BCa_Klong_Khong_%2819%29.jpg?width=1500" alt="Wide empty beach on Ko Lanta Yai" loading="lazy" decoding="async"><figcaption><span class="cap">Ko Lanta’s west coast does one thing very well.</span><a href="https://commons.wikimedia.org/wiki/File:2016_Prowincja_Krabi%2C_Ko_Lanta_Yai%2C_Pla%C5%BCa_Klong_Khong_%2819%29.jpg" target="_blank" rel="noopener">Marcin Konsek · CC BY-SA 4.0 · Wikimedia Commons</a></figcaption></figure>
+      <p class="intro">Lanta is a different animal from Krabi, and that’s the reason to go. No dramatic karsts — wide west-facing beaches, mangroves, jungle hills, quiet fishing villages. It grew up as a trading port where sea gypsies, Muslim fishing families and Chinese merchants settled, and it still feels like it.</p>
+      <p>Set your expectations honestly. Someone who spent four days there concluded it isn’t an island with an endless list of things to do — the best of it is wild beaches, sunsets, the Old Town and boat trips. That’s not a criticism. It’s the point.</p>
+      <h3>Which beach</h3>
+    </div>
+
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Beach</th><th>What it’s like</th></tr></thead>
+        <tbody>
+          <tr><td>Klong Dao <span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJMc3GJToDTjARxtiZhqNjHVo" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Khlong+Dao+Beach+Koh+Lanta" target="_blank" rel="noopener">TA</a></span></td><td>The longest and busiest. Calm, shallow, easy.</td></tr>
+          <tr><td>Long Beach <span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJN_KqWl4DTjAR-SbQArlF9sw" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Long+Beach+Phra+Ae+Koh+Lanta" target="_blank" rel="noopener">TA</a></span></td><td>Four kilometres of golden sand. Bars and loungers in the middle, quiet at the south end.</td></tr>
+          <tr><td>Klong Khong <span class="seeit"><a class="lk" href="https://www.google.com/maps/search/?api=1&query=Klong+Khong+Beach+Koh+Lanta" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Klong+Khong+Beach+Koh+Lanta" target="_blank" rel="noopener">TA</a></span></td><td>Rockier, a bit alternative, cheaper places to stay.</td></tr>
+          <tr><td>Klong Nin <span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJyb8633MFTjARf7PS32nLPVo" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Klong+Nin+Beach+Koh+Lanta" target="_blank" rel="noopener">TA</a></span></td><td><strong>Where I’d stay.</strong> Quiet, good swimming, enough restaurants that you’re not stuck eating at your hotel every night.</td></tr>
+          <tr><td>Kantiang Bay <span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJI6nNx2wPTjARAqZhYOn1KLU" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Kantiang+Bay+Koh+Lanta" target="_blank" rel="noopener">TA</a></span></td><td>Southern and dramatic, more cut off.</td></tr>
+          <tr><td>Bamboo Beach <span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJayM3CCYPTjARNbPx0UMfR60" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Bamboo+Beach+Koh+Lanta" target="_blank" rel="noopener">TA</a></span></td><td>Arguably the prettiest on the island, right by the national park.</td></tr>
+          <tr><td>Nui Bay <span class="seeit"><a class="lk" href="https://www.google.com/maps/search/?api=1&query=Nui+Bay+Koh+Lanta" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Nui+Bay+Koh+Lanta" target="_blank" rel="noopener">TA</a></span></td><td>Tiny, no resorts, a few minutes down through the jungle from the road.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col">
+      <figure class="fig" style="--ar:16/9"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lighthouse_in_Mu_Ko_Lanta_NP_%281%29.jpg?width=1300" alt="Lighthouse at Mu Ko Lanta National Park" loading="lazy" decoding="async"><figcaption><span class="cap">The lighthouse at the southern tip.</span><a href="https://commons.wikimedia.org/wiki/File:Lighthouse_in_Mu_Ko_Lanta_NP_%281%29.jpg" target="_blank" rel="noopener">Krzysztof Golik · CC BY-SA 4.0 · Wikimedia Commons</a></figcaption></figure><h3>The drive south</h3>
+      <p>Rent a scooter — 200 to 250 baht a day, less if you take it for several — and ride down to <strong><a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJB-AbmuUCTjAR1B7H5bnkZLU" target="_blank" rel="noopener">Mu Ko Lanta National Park</a></strong> at the southern tip. Past Klong Nin the road turns hilly and winding and the coast opens up on your right. You’ll see monitor lizards. The roads are worse in the north and better in the south, which is convenient.</p>
+      <p>At the park there’s a white lighthouse, a short climb, two quiet beaches and a jungle trail of about two kilometres — steep at the start, with ropes in places. Two hundred baht each plus twenty to park. Fair warning on both counts: one guide reckons the beaches there aren’t the island’s best, and the monkeys will absolutely go through your bag.</p>
+      <p>Honestly, the drive is half the reason to go.</p>
+
+      <figure class="fig" style="--ar:3/1"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ko_Lanta_-_Lanta_Old_Town_-_0077-Pano.jpg?width=1800" alt="Stilted shophouses over the water at Lanta Old Town" loading="lazy" decoding="async"><figcaption><span class="cap">Old Town, built out over the water.</span><a href="https://commons.wikimedia.org/wiki/File:Ko_Lanta_-_Lanta_Old_Town_-_0077-Pano.jpg" target="_blank" rel="noopener">Stefan Fussan · CC BY-SA 3.0 · Wikimedia Commons</a></figcaption></figure><h3>Lanta Old Town <span class="seeit"><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJDR0AQ-QFTjAR2x79Srilkd8" target="_blank" rel="noopener">Map</a><a class="lk" href="https://www.tripadvisor.com/Search?q=Lanta+Old+Town+Koh+Lanta" target="_blank" rel="noopener">Reviews</a></span></h3>
+      <p>On the east coast, and worth crossing the island for. Teak shophouses along a single street, restaurants built out over the water on stilts, a pier that’s been there a century. This is where the island’s mixed history is still legible in the buildings.</p>
+      <div class="note heads">
+        <p class="label">A festival that might land in your week</p>
+        <p>The <strong>Laanta Lanta Festival</strong> takes over the Old Town for three days — the road closed to traffic, lanterns strung overhead, Rong Ngen singing and dancing, batik and Toi-leaf handicraft, food stalls the length of the street. It’s a celebration of exactly the mix of people the island is made of.</p>
+        <p>The trouble is the dates move badly. It was 7–9 March in 2020, shoved back to 11–13 April in 2025 to avoid Ramadan, and 27–29 March in 2026. It’s traditionally set around the first full moon in March, and with Ramadan ending around the 8th in 2027 it could fall just after — inside your window, or well past it. Watch the TAT Krabi channel from January. If it lands, rearrange everything around it.</p>
+      </div>
+
+      <h3>The rest</h3>
+      <p>Boat trips beyond Koh Rok: <strong><a class="plink" href="https://www.google.com/maps/search/?api=1&query=Koh+Haa+islands+Thailand" target="_blank" rel="noopener">Koh Haa</a></strong>, a ring of islets with swim-through caves, is the signature dive site. <strong><a class="plink" href="https://www.google.com/maps/search/?api=1&query=Koh+Mook+Emerald+Cave+Trang" target="_blank" rel="noopener">Koh Mook</a></strong> has the Emerald Cave, and <strong><a class="plink" href="https://www.google.com/maps/search/?api=1&query=Koh+Kradan+Trang" target="_blank" rel="noopener">Koh Kradan</a></strong> has a serious claim to one of the best beaches anywhere. And <strong><a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJS5-XJfLkUTARW-zTPv59Oes" target="_blank" rel="noopener">Koh Jum</a></strong>, where no day-tour boats go at all — which is exactly why you’d go.</p>
+      <p>On land: cooking at <strong><a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJe7TWfT8DTjARVlCxSygOZ1s" target="_blank" rel="noopener">Time for Lime</a></strong>, whose profits fund Lanta Animal Welfare. The night market at <a class="plink" href="https://www.google.com/maps/search/?api=1&query=Sala+Dan+Koh+Lanta" target="_blank" rel="noopener">Saladan</a>, the busiest town on the island — which tells you more about Lanta than about Saladan. Khlong Chak waterfall and Khao Mai Kaew cave. And if elephants are on your list, <strong><a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJTzQ3Fd4PTjAR6d69_kvKAQI" target="_blank" rel="noopener">Following Giants</a></strong> is observation rather than riding.</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="phuket">
+  <div class="wrap"><div class="col">
+    <div class="shead"><p class="label">You asked</p><h2>Should you take the boat to Phuket for a day?</h2></div><figure class="fig" style="--ar:21/9"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Khao_Phing_Kan_and_Koh_Tapu_%28James_Bond_Island%29.jpg?width=1500" alt="Khao Phing Kan and Koh Tapu in Phang Nga Bay" loading="lazy" decoding="async"><figcaption><span class="cap">Phang Nga Bay — the crossing worth making.</span><a href="https://commons.wikimedia.org/wiki/File:Khao_Phing_Kan_and_Koh_Tapu_%28James_Bond_Island%29.jpg" target="_blank" rel="noopener">Kemal Kaya · CC BY-SA 2.5 · Wikimedia Commons</a></figcaption></figure>
+    <p class="intro">No — and not for snobbish reasons. The timetable simply doesn’t allow it, and even if it did the prize isn’t worth the crossing.</p>
+
+    <p>The ferry that runs this route, the Ao Nang Princess, is essentially one boat doing one round trip a day, and it goes the wrong way for you. It leaves Ao Nang at 15:00, calls at Railay a quarter-hour later, and reaches Rassada Pier at 17:15. The return leg runs in the <em>morning</em> — Phuket 08:30, back in Ao Nang by 11:00. You would arrive four and a half hours after the only boat home had already left.</p>
+
+    <p>Speedboats give you a theoretical window. Out at 09:30, arriving around eleven; back on the 15:00, home by twenty to five. That’s four hours on the ground, for two crossings at roughly $70 a head <em>each way</em> — call it €130 for the pair of you before you’ve bought so much as a coffee. And you land at Rassada Pier, which is four kilometres from Phuket Town and a long way further from any beach worth the name. Your four hours become two and a half.</p>
+
+    <div class="pull">Phuket isn’t a sight. It’s an airport with beaches attached, and the beaches aren’t as good as the ones you can walk to.</div>
+
+    <p>The karst scenery you came for is on your side of the bay. Railay and Phra Nang beat anything on Phuket’s west coast. You’d be spending a peak-season day and €130 in boat fares to visit a busier, less interesting version of where you already are.</p>
+
+    <h3>What you actually want instead</h3><figure class="fig" style="--ar:16/9"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sunrise%2C_Koh_Yao_Noi_%28island%29%2C_Phang_Nga_Bay%2C_Thailand.jpg?width=1300" alt="Sunrise over Phang Nga Bay from Koh Yao Noi" loading="lazy" decoding="async"><figcaption><span class="cap">Sunrise from Koh Yao Noi.</span><a href="https://commons.wikimedia.org/wiki/File:Sunrise%2C_Koh_Yao_Noi_%28island%29%2C_Phang_Nga_Bay%2C_Thailand.jpg" target="_blank" rel="noopener">Vyacheslav Argenberg · CC BY 4.0 · Wikimedia Commons</a></figcaption></figure>
+    <p>If the appeal is the crossing itself — and it’s a good instinct, that bay is the best thing on this coast — go to <strong><a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJkbW4lzOxUTARjcUkyDMaV3A" target="_blank" rel="noopener">Koh Yao Noi</a></strong>. It sits in the middle of Phang Nga Bay, halfway between Krabi and Phuket, and boats run from Ao Nang, Krabi Town and the floating pier at Railay. Rubber plantations, rice paddies, almost no traffic, and the eastern shore looks straight out at the limestone towers.</p>
+    <div class="note">
+      <p class="label">In fairness, the other view</p>
+      <p>Not everyone’s convinced. One writer calls the beaches there nowhere near Thailand’s best and the scenery scrubby, and makes the fair point that a lot of Koh Yao day trips visit the same islands you’d see from Ao Nang anyway. Both things are true. Go for the bay, the quiet and the ordinary island life — not for the sand.</p>
+      <p>It’s also a predominantly Muslim island whose residents would quite like to keep mass tourism at arm’s length. Dress modestly, don’t drink in public. And given Eid falls that week, check what’s open before you commit a day.</p>
+    </div>
+  </div></div>
+</section>
+
+
+<section id="sleep">
+  <div class="wrap">
+    <div class="col">
+      <div class="shead"><p class="label">Rooms</p><h2>Where to sleep, and what I couldn’t check</h2></div>
+      <p class="intro">Let me be straight about this section before you read it. I couldn’t get at live Booking.com scores or March 2027 prices — no access, and search results don’t surface either reliably. So what follows is a list of leads worth pricing, not a verified shortlist against your filter. I’d rather hand you a list with a hole in it than make numbers up.</p>
+      <p>Two things I <em>can</em> tell you with confidence. March is peak season, so the good places go early — and you’re seven months out, which is early. That’s an advantage; spend it. And <strong>€125 a night, about 4,700 baht, buys a genuinely good four-star on this coast even in March.</strong> Your budget isn’t the constraint here. Availability is.</p>
+      <div class="note heads">
+        <p class="label">Money you’re not spending</p>
+        <p>Your current page has Panan Krabi Resort at roughly €45–70 a night against a €125 ceiling — around €500 unspent across nine nights. Trade up on the Lanta end, where five nights ride on the choice, or bank it. Just do it on purpose rather than by accident.</p>
+      </div>
+      <h3>Krabi mainland</h3>
+    </div>
+
+    <div class="rooms">
+      <div class="room">
+        <h3>Nakamanda Resort &amp; Spa <span class="seeit"><a class="lk" href="https://www.booking.com/searchresults.html?ss=Nakamanda+Resort+and+Spa+Krabi" target="_blank" rel="noopener">Booking</a><a class="lk" href="https://www.google.com/maps/search/?api=1&query=Nakamanda+Resort+and+Spa+Krabi" target="_blank" rel="noopener">Map</a></span></h3><span class="where">Klong Muang</span>
+        <p>On the quiet beach twenty minutes north of Ao Nang. Outdoor pool, spacious rooms, mountains behind. If you take my advice about basing away from the crowds, start here.</p>
+        <div class="tags"><span class="tag q">score unchecked</span><span class="tag">Beachfront</span><span class="tag q">breakfast?</span></div>
+      </div>
+      <div class="room">
+        <h3>JR Place <span class="seeit"><a class="lk" href="https://www.booking.com/searchresults.html?ss=JR+Place+Klong+Muang+Krabi" target="_blank" rel="noopener">Booking</a><a class="lk" href="https://www.google.com/maps/search/?api=1&query=JR+Place+Klong+Muang+Krabi" target="_blank" rel="noopener">Map</a></span></h3><span class="where">Klong Muang · the cheap way in</span>
+        <p>Small apartment-style place with a pool, seven hundred metres back from the sand. How you buy the quiet-beach location if the beachfront resorts come in over budget.</p>
+        <div class="tags"><span class="tag q">score unchecked</span><span class="tag">Pool</span></div>
+      </div>
+      <div class="room">
+        <h3>Loy Chalet <span class="seeit"><a class="lk" href="https://www.booking.com/searchresults.html?ss=Loy+Chalet+Krabi" target="_blank" rel="noopener">Booking</a><a class="lk" href="https://www.google.com/maps/search/?api=1&query=Loy+Chalet+Krabi" target="_blank" rel="noopener">Map</a></span></h3><span class="where">Klong Muang · for couples</span>
+        <p>Private villas, a pool looking out over the hills, and a restaurant people rate. Quiet and romantic without being remote.</p>
+        <div class="tags"><span class="tag q">score unchecked</span><span class="tag">Pool</span></div>
+      </div>
+      <div class="room">
+        <h3>Railay, for one night <span class="seeit"><a class="lk" href="https://www.booking.com/searchresults.html?ss=Railay+Beach+Krabi" target="_blank" rel="noopener">Booking</a><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJi-WSB57qUTARgVAhfLGL2GE" target="_blank" rel="noopener">Map</a></span></h3><span class="where">Book this early</span>
+        <p>Railay Bay Resort, Railay Princess, Sand Sea Resort, Bhu Nga Thani. Everything on the peninsula arrives by boat, so you pay more for less — and peak March sells out.</p>
+        <div class="tags"><span class="tag q">score unchecked</span><span class="tag q">may exceed €125</span></div>
+      </div>
+    </div>
+
+    <div class="col"><h3>Koh Lanta</h3></div>
+    <div class="rooms">
+      <div class="room">
+        <h3>The Klong Nin cluster <span class="seeit"><a class="lk" href="https://www.booking.com/searchresults.html?ss=Klong+Nin+Beach+Koh+Lanta" target="_blank" rel="noopener">Booking</a><a class="lk" href="https://www.google.com/maps/place/?q=place_id:ChIJyb8633MFTjARf7PS32nLPVo" target="_blank" rel="noopener">Map</a></span></h3><span class="where">The beach I’d choose</span>
+        <p>Lanta Miami, right on the sand with sea-view rooms and some private splash pools, and food people go out of their way for. SriLanta Resort &amp; Spa for thatched bungalows and yoga. Lanta Il Mare and Lanta Nature Beach round it out.</p>
+        <div class="tags"><span class="tag q">scores unchecked</span><span class="tag">Beachfront</span></div>
+      </div>
+      <div class="room">
+        <h3>Long Beach Chalet <span class="seeit"><a class="lk" href="https://www.booking.com/searchresults.html?ss=Long+Beach+Chalet+Koh+Lanta" target="_blank" rel="noopener">Booking</a><a class="lk" href="https://www.google.com/maps/search/?api=1&query=Long+Beach+Chalet+Koh+Lanta" target="_blank" rel="noopener">Map</a></span></h3><span class="where">Long Beach</span>
+        <p>Forty-five Thai bungalows, a 25-metre infinity pool on the beach and a second one among the palms. One source pairs a Long Beach property at $119 with breakfast and a 9.4 — I couldn’t corroborate it.</p>
+        <div class="tags"><span class="tag q">score unchecked</span><span class="tag">Two pools</span></div>
+      </div>
+      <div class="room">
+        <h3>Rawi Warin Resort &amp; Spa <span class="seeit"><a class="lk" href="https://www.booking.com/searchresults.html?ss=Rawi+Warin+Resort+and+Spa+Koh+Lanta" target="_blank" rel="noopener">Booking</a><a class="lk" href="https://www.google.com/maps/search/?api=1&query=Rawi+Warin+Resort+and+Spa+Koh+Lanta" target="_blank" rel="noopener">Map</a></span></h3><span class="where">Your current stretch pick — recheck</span>
+        <p>Your page cites about $96 as a low-season steal. One source I found quotes $179 with breakfast in season, which would put it over your ceiling. Neither figure confirmed. Worth checking before it stays on the page.</p>
+        <div class="tags"><span class="tag q">price disputed</span></div>
+      </div>
+      <div class="room">
+        <h3>La Laanta Hideaway <span class="seeit"><a class="lk" href="https://www.booking.com/searchresults.html?ss=La+Laanta+Hideaway+Resort+Koh+Lanta" target="_blank" rel="noopener">Booking</a><a class="lk" href="https://www.google.com/maps/search/?api=1&query=La+Laanta+Hideaway+Resort+Koh+Lanta" target="_blank" rel="noopener">Map</a></span></h3><span class="where">Bamboo Beach, far south</span>
+        <p>A pool overlooking the beach, five minutes from the national park — and at least forty-five minutes from Saladan. Lovely, but factor the isolation in properly.</p>
+        <div class="tags"><span class="tag q">score unchecked</span><span class="tag">Remote</span></div>
+      </div>
+    </div>
+
+    <div class="col">
+      <h3>How to check these quickly</h3>
+      <p>On Booking, set 4–13 March 2027 for two adults, then filter on review score 8+, breakfast included and swimming pool, cap it at €125, and <strong>sort by score rather than price</strong>. Then cross-check your top five against Google Maps reviews — Booking scores bunch up at the top, and an 8.4 with nine hundred reviews is a safer bet than a 9.1 with forty.</p>
+      <div class="note">
+        <p class="label">Two local catches</p>
+        <p><strong>"Breakfast included" sometimes means a set plate</strong>, not the buffet in the photographs. Recent reviews will tell you. And when you book the Lanta ferry, <strong><a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJS0dsYoS_UTARjcit7vEJlX8" target="_blank" rel="noopener">Nopparat Thara</a> is not <a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJMXnlD7eUUTARAKyxH1Q2SVw" target="_blank" rel="noopener">Klong Jilad</a></strong> — Nopparat Thara serves Phi Phi, and tickets get mis-sold between the two often enough that it’s worth saying out loud.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="moving">
+  <div class="wrap">
+    <div class="col">
+      <div class="shead"><p class="label">Logistics</p><h2>Getting from Krabi to Koh Lanta</h2></div><figure class="fig" style="--ar:21/9"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/2016_Prowincja_Krabi%2C_Widoki_ze_statku_p%C5%82yn%C4%85cego_na_trasie_Ao_Nang_-_Ko_Lanta_Yai_%2825%29.jpg?width=1500" alt="View from the ferry between Ao Nang and Ko Lanta" loading="lazy" decoding="async"><figcaption><span class="cap">Two hours of this, for about fifteen euros.</span><a href="https://commons.wikimedia.org/wiki/File:2016_Prowincja_Krabi%2C_Widoki_ze_statku_p%C5%82yn%C4%85cego_na_trasie_Ao_Nang_-_Ko_Lanta_Yai_%2825%29.jpg" target="_blank" rel="noopener">Marcin Konsek · CC BY-SA 4.0 · Wikimedia Commons</a></figcaption></figure>
+      <p class="intro">Four ways, and in March every one of them runs. The ferry is the pleasant option, the minivan is the cheap one, and the speedboat is for people in a hurry, which on this trip you aren’t.</p>
+    </div>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>How</th><th>How long</th><th>Roughly</th><th>Worth knowing</th></tr></thead>
+        <tbody>
+          <tr><td>Ferry</td><td>90–120 min</td><td>$12–20 each</td><td><a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJMXnlD7eUUTARAKyxH1Q2SVw" target="_blank" rel="noopener">Klong Jilad</a> to <a class="plink" href="https://www.google.com/maps/place/?q=place_id:ChIJIwrRPuICTjAR6sWn1tBrVP4" target="_blank" rel="noopener">Saladan</a>. The 10:30 runs all year; the 13:30 and 16:00 only from November to April.</td></tr>
+          <tr><td>Minivan + car ferry</td><td>2.5–3 hrs</td><td>300–600 baht</td><td>Up to four hours if the ferry queue is bad. Most leave between eight and noon; the last one out of Krabi Town is around four.</td></tr>
+          <tr><td>Speedboat</td><td>1.5–2 hrs</td><td>600–1,200 baht</td><td>Pier to pier, November to April only.</td></tr>
+          <tr><td>Private minivan</td><td>20–40 min faster</td><td>2,000–3,500 baht<br>per vehicle</td><td>For two people that’s two to four times the shared fare. Worth it with luggage; otherwise not.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <div class="note heads">
+        <p class="label">Don’t book at the hotel desk</p>
+        <p>Resort-arranged tickets carry roughly a <strong>30% markup</strong>. Book online and you land at the bottom of those price ranges; buy at the pier and you land at the top.</p>
+      </div>
+      <p>Coming off Railay there’s no road at all — longtail to Ao Nang for about $4 each, then road transport to Klong Jilad, three quarters of an hour to an hour all in.</p>
+      <p>Heading back north later, high season only: a ferry leaves Lanta at 13:30, about 550 baht, two to three hours, stopping at Railay and Nopparat Thara. Minivans go at eight, noon and one for 400 to 500 baht.</p>
+      <p>The car ferry itself crosses at Ban Hua Hin onto Koh Lanta Noi and runs from five in the morning until midnight, with three or four boats working through high season. The queue there is the main reason minivan times vary — and see the note about Eid, because that week it will be busier.</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="plan">
+  <div class="wrap"><div class="col">
+    <div class="shead"><p class="label">Putting it together</p><h2>Nine days, sketched</h2></div>
+    <p class="intro">Not a schedule — a shape. Built on the Railay-overnight version, with two days left deliberately empty, because nine island nights followed by four in Bangkok is not a trip that survives being fully booked.</p>
+
+    <div class="gallery"><figure class="fig" style="--ar:3/4"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Railay%2C_Krabi%2C_Palms%2C_Thailand.jpg?width=800" alt="Palms at Railay" loading="lazy" decoding="async"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Railay%2C_Krabi%2C_Palms%2C_Thailand.jpg" target="_blank" rel="noopener">Vyacheslav Argenberg · CC BY 4.0 · Wikimedia Commons</a></figcaption></figure><figure class="fig" style="--ar:3/4"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Emerald_pool_park%2C_Krabi_province%2C_Thailand_2018_2.jpg?width=800" alt="The Emerald Pool near Krabi" loading="lazy" decoding="async"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Emerald_pool_park%2C_Krabi_province%2C_Thailand_2018_2.jpg" target="_blank" rel="noopener">Karelj · CC BY-SA 4.0 · Wikimedia Commons</a></figcaption></figure><figure class="fig" style="--ar:3/4"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/7.Ko_Hong_Island_-_Andaman_Sea_-_Krabi_Province%2C_Thailand.jpg?width=800" alt="Ko Hong lagoon" loading="lazy" decoding="async"><figcaption><a href="https://commons.wikimedia.org/wiki/File:7.Ko_Hong_Island_-_Andaman_Sea_-_Krabi_Province%2C_Thailand.jpg" target="_blank" rel="noopener">Wolfgang Holzem · CC BY-SA 4.0 · Wikimedia Commons</a></figcaption></figure></div>
+    <div class="days">
+      <div class="dayc"><div class="n"><b>1</b><span>Thu 4 Mar</span></div><div class="d">
+        <h3>Arrive, and nothing else</h3><p>Bangkok at 16:35, evening flight onward, into Krabi around ten. Don’t plan a thing.</p></div></div>
+      <div class="dayc"><div class="n"><b>2</b><span>Fri 5 Mar</span></div><div class="d">
+        <h3>Dragon Crest at first light</h3><p>Up before dawn, on the trail by half six, down before the heat. Then absolutely nothing for the rest of the day.</p></div></div>
+      <div class="dayc"><div class="n"><b>3</b><span>Sat 6 Mar</span></div><div class="d">
+        <h3>The Hong Islands, privately</h3><p>Charter the longtail, be on the water before nine, climb to the viewpoint, swim in the lagoon before anyone else arrives.</p></div></div>
+      <div class="dayc"><div class="n"><b>4</b><span>Sun 7 Mar</span></div><div class="d">
+        <h3>Over to Railay</h3><p>Boat across mid-morning. Phra Nang all afternoon, and the sunset once the day boats have gone.</p></div></div>
+      <div class="dayc"><div class="n"><b>5</b><span>Mon 8 Mar</span></div><div class="d">
+        <h3>Railay at dawn, then Lanta</h3><p>The beach to yourselves for an hour. Then longtail, road, ferry, and you’re on the island by early afternoon.</p></div></div>
+      <div class="dayc"><div class="n"><b>6</b><span>Tue 9 Mar</span></div><div class="d">
+        <h3>Old Town, loosely</h3><p>Eid, roughly. Cross to the east coast, eat over the water, see what’s happening. Keep the day open.</p></div></div>
+      <div class="dayc"><div class="n"><b>7</b><span>Wed 10 Mar</span></div><div class="d">
+        <h3>Koh Rok</h3><p>The snorkelling day. Long, hot, worth it.</p></div></div>
+      <div class="dayc"><div class="n"><b>8</b><span>Thu 11 Mar</span></div><div class="d">
+        <h3>Scooter south</h3><p>The winding road, the lighthouse, the national park, Bamboo Beach. Lunch somewhere with a view.</p></div></div>
+      <div class="dayc"><div class="n"><b>9</b><span>Fri 12 Mar</span></div><div class="d">
+        <h3>The empty one</h3><p>Cooking class, or the beach, or nothing at all. Pack in the evening.</p></div></div>
+      <div class="dayc"><div class="n"><b>10</b><span>Sat 13 Mar</span></div><div class="d">
+        <h3>North, and on to Bangkok</h3><p>Early transfer to Krabi airport, afternoon flight, dinner in the city.</p></div></div>
+    </div>
+  </div></div>
+</section>
+
+
+<section id="book">
+  <div class="wrap"><div class="col">
+    <div class="shead"><p class="label">Homework</p><h2>Before you book anything</h2></div>
+    <p class="intro">Everything above is research, not confirmation. These are the things to check against live sources before money moves. Tick them off as you go — nothing’s saved, so this is just for the session.</p>
+    <p><button class="reset" type="button" id="reset">Clear ticks</button></p>
+    <div class="checks">
+      <div class="check" tabindex="0" role="checkbox" aria-checked="false"><div class="box"></div><div class="t"><b>Every room, on live Booking</b><span>4–13 March 2027. Nothing in the sleeping section is verified — treat it all as leads.</span></div></div>
+      <div class="check" tabindex="0" role="checkbox" aria-checked="false"><div class="box"></div><div class="t"><b>The exact date of Eid</b><span>Projected around 9–10 March but set by moon sighting. Re-check in February.</span></div></div>
+      <div class="check" tabindex="0" role="checkbox" aria-checked="false"><div class="box"></div><div class="t"><b>Laanta Lanta Festival dates</b><span>They move by weeks. Watch TAT Krabi from January 2027.</span></div></div>
+      <div class="check" tabindex="0" role="checkbox" aria-checked="false"><div class="box"></div><div class="t"><b>Whether Koh Rok is open</b><span>The national park islands close seasonally, and this is your one big snorkelling day.</span></div></div>
+      <div class="check" tabindex="0" role="checkbox" aria-checked="false"><div class="box"></div><div class="t"><b>March ferry times to Lanta</b><span>The 13:30 and 16:00 are seasonal. And confirm it’s Klong Jilad, not Nopparat Thara.</span></div></div>
+      <div class="check" tabindex="0" role="checkbox" aria-checked="false"><div class="box"></div><div class="t"><b>Park and entry fees</b><span>Mu Ko Lanta 200 baht plus 20 to park, Khao Ngon Nak 200, Emerald Pool around 400. These have risen repeatedly — treat them as floors.</span></div></div>
+      <div class="check" tabindex="0" role="checkbox" aria-checked="false"><div class="box"></div><div class="t"><b>Where the Dragon Crest trailhead is</b><span>Pin the ranger station near Tubkaek before you travel. People have given up looking for it.</span></div></div>
+      <div class="check" tabindex="0" role="checkbox" aria-checked="false"><div class="box"></div><div class="t"><b>What a private longtail actually costs</b><span>2,500 baht flat is the quoted figure. Confirm locally, and haggle.</span></div></div>
+      <div class="check" tabindex="0" role="checkbox" aria-checked="false"><div class="box"></div><div class="t"><b>Which of the three plans you’re doing</b><span>Decide before you book a single Krabi night — the Railay version needs a room on the peninsula, and those go first.</span></div></div>
+    </div>
+
+    <details class="appx">
+      <summary>Appendix — drop-in fragments for the itinerary site</summary>
+      <p>Written against the live markup on <code>weblab:8096 #view-andaman</code>, read 26 August 2026, using your existing class names. Map and booking links are left as <code>PLACEHOLDER_*</code> since I don’t have your link pattern, and every score reads <em>unverified</em> rather than a number, deliberately.</p>
+      <div id="patches"></div>
+    </details>
+  </div></div>
+</section>
+
+
+<section>
+  <div class="wrap">
+    <div class="col"><div class="shead"><p class="label">Where this came from</p><h2>Sources</h2></div></div>
+    <div class="sources">
+      <p><b>Weather &amp; season</b>weather2travel · holiday-weather · weather-atlas · climatestotravel · easeweather · gotripzi · thailandhighlights</p>
+      <p><b>Ferries &amp; transport</b>directferries · rome2rio · rassadapier · phuketferry · travelfish · bookaway · shathailand · southeastasiasimplified · diveandrelax · siamtickets</p>
+      <p><b>Krabi</b>getyourguide · weseektravel · travelhiatus · passport-for-living · tripwis · varanahotel · railayecotour · themanduls</p>
+      <p><b>Koh Lanta</b>northabroad · thailandwanderlust · voyagetips · explorertom · thailandwithtereza · neverendingvoyage · bridgesandballoons · thailandwherestay · what-to-do-in · tripadvisor</p>
+      <p><b>Boat trips</b>krabiboat.tours · postcardsbyhannah · global-gallivanting · oh-hoo · travelwithdestinationz</p>
+      <p><b>Koh Yao</b>adventuresofjellie · thailandstartshere · smile4travel</p>
+      <p><b>Ramadan 2027</b>wego · islamiccalc · anycalendar · acadcalendar · hrf.org.uk</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><b>Draft — nothing booked</b><div style="margin-top:.35rem">Written 26 August 2026 for the island half of the Andaman route, 4–13 March 2027</div></div>
+    <div><a href="#top">Back to the top ↑</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var DAYS=[["Thu","4"],["Fri","5"],["Sat","6"],["Sun","7"],["Mon","8"],
+            ["Tue","9"],["Wed","10"],["Thu","11"],["Fri","12"],["Sat","13"]];
+  var PLANS={
+    A:{b:["krabi","krabi","krabi","krabi","lanta","lanta","lanta","lanta","lanta","out"],
+       l:["Ao Nang","Ao Nang","Ao Nang","Ao Nang","Lanta","Lanta","Lanta","Lanta","Lanta","→ BKK"],
+       m:[4,9],
+       s:"<b>Four mainland nights — but only three usable days,</b> because you arrive at ten at night. Five things worth doing in Krabi and you'll manage three of them, jet-lagged, with no slack. Railay gets seen at its most crowded."},
+    B:{b:["krabi","krabi","krabi","railay","lanta","lanta","lanta","lanta","lanta","out"],
+       l:["Klong Muang","Klong Muang","Klong Muang","Railay","Lanta","Lanta","Lanta","Lanta","Lanta","→ BKK"],
+       m:[3,4,9],
+       s:"<b>Railay becomes a night instead of a day,</b> which hands you the sunset, the dawn and the morning you leave. One extra check-in. The price is Tiger Cave and the Emerald Pool."},
+    C:{b:["krabi","krabi","krabi","krabi","krabi","lanta","lanta","lanta","lanta","out"],
+       l:["Ao Nang","Ao Nang","Ao Nang","Ao Nang","Ao Nang","Lanta","Lanta","Lanta","Lanta","→ BKK"],
+       m:[5,9],
+       s:"<b>A fourth mainland day, so Tiger Cave survives.</b> But Lanta drops to three full days, and Koh Rok plus the park plus the Old Town starts feeling like a schedule again."}
+  };
+  var strip=document.getElementById("strip"),say=document.getElementById("planSay");
+  function render(k){
+    var p=PLANS[k];strip.innerHTML="";
+    DAYS.forEach(function(d,i){
+      var el=document.createElement("div");el.className="night "+p.b[i];
+      el.innerHTML=(p.m.indexOf(i)>-1?'<span class="mv">⇄</span>':"")+
+        '<div class="dw">'+d[0]+'</div><div class="dt">'+d[1]+'</div>'+
+        '<div class="base">'+p.l[i]+'</div>'+((i===5||i===6)?'<span class="eid">Eid</span>':"");
+      strip.appendChild(el);
+    });
+    say.innerHTML=p.s;
+  }
+  var tabs=document.querySelectorAll(".ptabs button");
+  tabs.forEach(function(b){b.addEventListener("click",function(){
+    tabs.forEach(function(o){o.setAttribute("aria-pressed","false")});
+    b.setAttribute("aria-pressed","true");render(b.dataset.plan);
+  })});
+  render("B");
+
+  function flip(c){var on=c.getAttribute("data-on")==="1";
+    c.setAttribute("data-on",on?"0":"1");c.setAttribute("aria-checked",on?"false":"true")}
+  document.querySelectorAll(".check").forEach(function(c){
+    c.addEventListener("click",function(){flip(c)});
+    c.addEventListener("keydown",function(e){if(e.key===" "||e.key==="Enter"){e.preventDefault();flip(c)}});
+  });
+  document.getElementById("reset").addEventListener("click",function(){
+    document.querySelectorAll(".check").forEach(function(c){
+      c.setAttribute("data-on","0");c.setAttribute("aria-checked","false")});
+  });
+
+  var P=[
+["Krabi — NEW day card for Khao Ngon Nak (missing from the page entirely)",
+`<div class="day">
+  <div class="when"><span class="dno">Day 2</span><span class="tag">Dawn start</span></div>
+  <div>
+    <h3>Dragon Crest at first light</h3>
+    <ul>
+      <li><b>Khao Ngon Nak</b> — 3.7 km up (7.4 km return) to 498 m, 1.5–2 hrs each way.
+        <a class="ilink" href="PLACEHOLDER_MAP">Khao Ngon Nak</a>
+        <span class="about">A ridge trail through jungle to a cliff viewpoint over the Andaman, the islands and the Krabi coastline — many rate it above the Tiger Cave panorama.</span>
+      </li>
+      <li>200 THB; sign in at the ranger station near <b>Tubkaek Beach</b>, ~30 min from Ao Nang.
+        <span class="about">Pin the trailhead first — it is poorly documented online and easy to miss.</span>
+      </li>
+      <li>Two litres of water minimum. March highs of 33–34 °C and UV 12 make this a 06:30 hike.</li>
+      <li>Afternoon: nothing.</li>
+    </ul>
+    <div class="lnks"><span class="pair">
+      <a class="lnk map" href="PLACEHOLDER_MAP">Khao Ngon Nak → Map</a>
+      <a class="lnk ta" href="PLACEHOLDER_TA">TA</a>
+    </span></div>
+  </div>
+</div>`],
+
+["Krabi — REPLACE the 'Longtail island day' card (adds the steer and the timing)",
+`<div class="day">
+  <div class="when"><span class="dno">Day 3</span><span class="tag">On the water by 09:00</span></div>
+  <div>
+    <h3>Hong Islands — private longtail, early</h3>
+    <ul>
+      <li><b>Hong Islands</b> over the 4 Islands circuit — more scenic, calmer, and the 400-step climb pays out in a 360° panorama.
+        <a class="ilink" href="PLACEHOLDER_MAP">Hong Islands</a>
+        <span class="about">"Hong" means room — the island's signature is a tidal lagoon enclosed by cliffs. Part of Bok Khorani National Park.</span>
+      </li>
+      <li><b>Before 09:00 is a different trip than after 11:00.</b> Hong takes overflow from Phuket day-tour groups arriving at midday.</li>
+      <li>A <b>private longtail</b> seats 6 at a flat ~2,500 THB whether there are two of you or six. Group tours pack 15–20 per boat.</li>
+      <li>Early-bird group speedboats start ~1,250 THB pp.</li>
+    </ul>
+    <div class="lnks">
+      <span class="pair"><a class="lnk map" href="PLACEHOLDER_MAP">Hong Islands → Map</a><a class="lnk ta" href="PLACEHOLDER_TA">TA</a></span>
+      <span class="pair"><a class="lnk map" href="PLACEHOLDER_MAP">4 Islands → Map</a><a class="lnk ta" href="PLACEHOLDER_TA">TA</a></span>
+    </div>
+  </div>
+</div>`],
+
+["Krabi — REPLACE the Railay day trip with an overnight",
+`<div class="day travel">
+  <div class="when"><span class="dno">Day 4</span><span class="tag">Sleep on Railay</span></div>
+  <div>
+    <h3>Railay overnight — the version without day-trippers</h3>
+    <ul>
+      <li>Longtail from Ao Nang mid-morning (~15 min). Check in rather than day-tripping.
+        <a class="ilink" href="PLACEHOLDER_MAP">Railay</a>
+        <span class="about">A limestone peninsula with no road access and four beaches — Tonsai, Railay East, Railay West and Phra Nang.</span>
+      </li>
+      <li><b>Phra Nang Beach</b> all afternoon, then sunset. The day boats leave around 16:00 and the peninsula empties.
+        <a class="ilink" href="PLACEHOLDER_MAP">Phra Nang</a>
+        <span class="about">The cave-shrine beach from the postcards — worth being here at dusk rather than at noon.</span>
+      </li>
+      <li>Optional: <b>Diamond Cave</b>, or an intro climbing session.</li>
+      <li>Next morning: Railay at dawn, then longtail → Ao Nang → Klong Jilad → Lanta.</li>
+    </ul>
+    <div class="lnks">
+      <span class="pair"><a class="lnk map" href="PLACEHOLDER_MAP">Railay → Map</a><a class="lnk ta" href="PLACEHOLDER_TA">TA</a></span>
+      <span class="pair"><a class="lnk map" href="PLACEHOLDER_MAP">Phra Nang → Map</a><a class="lnk ta" href="PLACEHOLDER_TA">TA</a></span>
+    </div>
+  </div>
+</div>`],
+
+["Lanta — REPLACE the transfer card (currently just 'road + short ferry')",
+`<div class="day travel">
+  <div class="when"><span class="dno">Day 5</span><span class="tag">Transfer</span></div>
+  <div>
+    <h3>Krabi → Koh Lanta</h3>
+    <ul>
+      <li><b>Passenger ferry</b> Klong Jilad → Saladan, 90–120 min, ~$12–20 pp. The 10:30 runs year-round; 13:30 and 16:00 are Nov–Apr only.</li>
+      <li><b>Shared minivan + car ferry</b> 2.5–3 hrs (up to 4 with queues), 300–600 THB pp. Departures weighted 08:00–12:00; last out of Krabi Town ~16:00.</li>
+      <li><b>Speedboat</b> 1.5–2 hrs, 600–1,200 THB pp, Nov–Apr only. <b>Private minivan</b> 2,000–3,500 THB per vehicle.</li>
+      <li><b>Two traps.</b> Resort-arranged tickets carry ~30% markup. And <b>Nopparat Thara is not Klong Jilad</b> — Nopparat Thara serves Phi Phi.</li>
+      <li>From Railay there's no road: longtail to Ao Nang (~$4 pp) then road to Klong Jilad, 45–60 min total.</li>
+    </ul>
+  </div>
+</div>`],
+
+["Lanta — NEW note card for Eid al-Fitr and the Laanta Lanta festival",
+`<div class="day">
+  <div class="when"><span class="dno">Note</span><span class="tag">Local calendar</span></div>
+  <div>
+    <h3>Eid al-Fitr lands mid-Lanta</h3>
+    <ul>
+      <li>Ramadan 1448 runs ~8 Feb – 8 March 2027, with <b>Eid al-Fitr on or about 9–10 March</b> — Days 6–7 of this leg. Set by moon sighting; re-check in February.</li>
+      <li><b>Koh Lanta is substantially Muslim.</b> Old Town is where Buddhist temples, Chinese shrines and mosques stand together, with Moken stilt houses over the water.
+        <span class="about">Some non-resort kitchens shift hours; resort restaurants unaffected. Southern Thai families travel for Eid, so ferries and the Ban Hua Hin car ferry queue get busier.</span>
+      </li>
+      <li>A reason to keep Days 6–7 unscheduled, not a reason to move dates.</li>
+      <li><b>Laanta Lanta Festival</b> — three days in Old Town, road closed, lanterns, Rong Ngen singing, batik and food stalls. <b>Dates move badly:</b> 7–9 March 2020, pushed to 11–13 April 2025 to avoid Ramadan, 27–29 March 2026. Watch TAT Krabi from ~January 2027.</li>
+    </ul>
+  </div>
+</div>`],
+
+["NEW note card — the Phuket day-trip question",
+`<div class="day">
+  <div class="when"><span class="dno">Note</span><span class="tag">Asked &amp; answered</span></div>
+  <div>
+    <h3>A Phuket day trip by boat — don't</h3>
+    <ul>
+      <li><b>The ferry makes it impossible.</b> The Ao Nang Princess is one vessel doing one round trip: Ao Nang 15:00 → Railay 15:15 → Rassada 17:15, with the return running Phuket 08:30 → Ao Nang 11:00. You'd arrive four hours after the only boat back had gone.</li>
+      <li><b>The speedboat version is still bad.</b> Best case Ao Nang 09:30 → Phuket ~11:00, back on the 15:00 — four hours on the ground at roughly $70 pp <em>each way</em>. Rassada Pier is just under 4 km from Phuket Town, far from any beach.</li>
+      <li><b>Phuket isn't a sight.</b> An airport and a ferry hub whose beaches don't beat Railay or Phra Nang.</li>
+      <li><b>Go to Koh Yao Noi instead</b> — mid Phang Nga Bay, reachable from Ao Nang, Krabi Town or the Railay floating pier.
+        <span class="about">Counter-view: some writers rate the Yao beaches as unremarkable and note that many day trips there visit the same islands you'd see from Ao Nang. Go for the bay and the quiet, not the sand. Predominantly Muslim — dress modestly, no drinking in public.</span>
+      </li>
+    </ul>
+  </div>
+</div>`],
+
+["Hotel cards — Klong Muang additions for WHERE TO STAY · AO NANG",
+`<div class="hotel">
+  <div class="htop"><h4>Nakamanda Resort &amp; Spa</h4><span class="tier pick">QUIET ALT</span></div>
+  <p>On Klong Muang beach, ~20 min north of Ao Nang — quieter and cleaner, long calm beach, enough restaurants to be comfortable. Outdoor pool, spacious rooms. The trade is limited nightlife and higher transport costs.</p>
+  <div class="meta">
+    <span class="chip score">★ unverified</span><span class="chip">Breakfast?</span><span class="chip">AC</span>
+    <span class="chip">Beachfront</span><span class="chip price">confirm for Mar 2027</span>
+    <a class="chip rates" href="PLACEHOLDER_BOOKING">Rates &amp; photos →</a>
+  </div>
+</div>
+
+<div class="hotel">
+  <div class="htop"><h4>JR Place</h4><span class="tier pick">VALUE</span></div>
+  <p>Apartment-style hotel with a pool, ~700 m back from Klong Muang beach. The cheap way to buy the quiet-beach location if the beachfront resorts price out.</p>
+  <div class="meta">
+    <span class="chip score">★ unverified</span><span class="chip">Breakfast?</span><span class="chip">AC</span>
+    <span class="chip">Pool</span><span class="chip price">confirm for Mar 2027</span>
+    <a class="chip rates" href="PLACEHOLDER_BOOKING">Rates &amp; photos →</a>
+  </div>
+</div>`],
+
+["Hotel cards — a Railay block, and Klong Nin for Lanta",
+`<div class="hotel">
+  <div class="htop"><h4>Railay — one night, book early</h4><span class="tier pick">SHORTLIST</span></div>
+  <p>Candidates to price: <b>Railay Bay Resort &amp; Spa</b>, <b>Railay Princess Resort &amp; Spa</b>, <b>Sand Sea Resort</b>, <b>Bhu Nga Thani</b>. Everything arrives by boat, so rates run high for the standard and peak March books out early.</p>
+  <div class="meta">
+    <span class="chip score">★ unverified</span><span class="chip">Breakfast?</span><span class="chip">Pool?</span>
+    <span class="chip price">peak likely &gt; €125</span>
+    <a class="chip rates" href="PLACEHOLDER_BOOKING">Rates &amp; photos →</a>
+  </div>
+</div>
+
+<div class="hotel">
+  <div class="htop"><h4>Klong Nin — the area to prefer</h4><span class="tier pick">AREA NOTE</span></div>
+  <p>Several guides' favourite Lanta beach: quiet, good swimming, still served by restaurants. Candidates — <b>Lanta Miami Resort</b> (beachfront, sea-view rooms, some with splash pools), <b>SriLanta Resort &amp; Spa</b> (thatched bungalows, wellness), <b>Lanta Il Mare</b>, <b>Lanta Nature Beach Resort</b>. Long Beach alternative: <b>Long Beach Chalet</b> — 45 bungalows, 25 m beachfront infinity pool plus a second.</p>
+  <div class="meta">
+    <span class="chip score">★ unverified</span><span class="chip">Breakfast?</span><span class="chip">Pool</span>
+    <span class="chip">Beachfront</span><span class="chip price">confirm for Mar 2027</span>
+    <a class="chip rates" href="PLACEHOLDER_BOOKING">Rates &amp; photos →</a>
+  </div>
+</div>`],
+
+["Verify list — nine Andaman items (the live list is Gulf-weighted)",
+`<div class="check">
+  <div class="box"></div>
+  <div class="t"><b>Every hotel score and rate, against live Booking for 4–13 Mar 2027.</b>
+    <span>Filter: score 8+, breakfast, pool, ≤€125, 2 adults — then sort by score, not price. An 8.4 with 900 reviews beats a 9.1 with 40. "Breakfast included" sometimes means a set plate.</span>
+  </div>
+</div>
+
+<div class="check">
+  <div class="box"></div>
+  <div class="t"><b>Eid al-Fitr 2027 exact date.</b>
+    <span>Projected 9–10 March but set by moon sighting. Re-confirm in February — it falls inside the Lanta block.</span>
+  </div>
+</div>
+
+<div class="check">
+  <div class="box"></div>
+  <div class="t"><b>Laanta Lanta Festival 2027 dates.</b>
+    <span>Moves by weeks year to year. Watch TAT Krabi from ~January 2027.</span>
+  </div>
+</div>
+
+<div class="check">
+  <div class="box"></div>
+  <div class="t"><b>Koh Rok open for your dates.</b>
+    <span>Mu Ko Lanta National Park islands close seasonally — this is the Day 7 trip.</span>
+  </div>
+</div>
+
+<div class="check">
+  <div class="box"></div>
+  <div class="t"><b>Krabi → Lanta ferry timetable for March 2027.</b>
+    <span>The 13:30 and 16:00 are Nov–Apr only; the 10:30 runs year-round. Confirm the pier is Klong Jilad, not Nopparat Thara.</span>
+  </div>
+</div>
+
+<div class="check">
+  <div class="box"></div>
+  <div class="t"><b>National park and site fees.</b>
+    <span>Mu Ko Lanta 200 THB pp (+20 scooter), Khao Ngon Nak 200 THB, Emerald Pool ~400 THB. These have risen repeatedly — treat as floors.</span>
+  </div>
+</div>
+
+<div class="check">
+  <div class="box"></div>
+  <div class="t"><b>Khao Ngon Nak trailhead location.</b>
+    <span>Pin the ranger station near Tubkaek Beach before travelling.</span>
+  </div>
+</div>
+
+<div class="check">
+  <div class="box"></div>
+  <div class="t"><b>Private longtail rate.</b>
+    <span>~2,500 THB flat for up to 6 is the commonly quoted figure. Confirm locally and negotiate.</span>
+  </div>
+</div>
+
+<div class="check">
+  <div class="box"></div>
+  <div class="t"><b>Which base split you're committing to.</b>
+    <span>Decide before booking any Krabi nights — the Railay option needs a room on the peninsula, and those go first.</span>
+  </div>
+</div>`]
+  ];
+
+  var host=document.getElementById("patches");
+  P.forEach(function(pair){
+    var w=document.createElement("div");w.className="patch";
+    var top=document.createElement("div");top.className="ptop";
+    var lbl=document.createElement("b");lbl.textContent=pair[0];
+    var btn=document.createElement("button");btn.type="button";btn.textContent="Copy";
+    top.appendChild(lbl);top.appendChild(btn);
+    var pre=document.createElement("pre"),code=document.createElement("code");
+    code.textContent=pair[1];pre.appendChild(code);
+    w.appendChild(top);w.appendChild(pre);host.appendChild(w);
+    btn.addEventListener("click",function(){
+      var ok=function(){btn.textContent="Copied";setTimeout(function(){btn.textContent="Copy"},1400)};
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(pair[1]).then(ok,function(){btn.textContent="Select manually"});
+      }else{
+        var r=document.createRange();r.selectNodeContents(code);
+        var s=window.getSelection();s.removeAllRanges();s.addRange(r);
+        try{document.execCommand("copy");ok()}catch(e){btn.textContent="Select manually"}
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
